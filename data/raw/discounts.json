@@ -1,0 +1,199 @@
+[
+  {
+    "id": "D001",
+    "type": "滿額折扣",
+    "threshold": 1307,
+    "discount": 200,
+    "exclusive": false,
+    "stackable": true,
+    "group": "amount"
+  },
+  {
+    "id": "D002",
+    "type": "滿額折扣",
+    "threshold": 2335,
+    "discount": 300,
+    "exclusive": false,
+    "stackable": true,
+    "group": "amount"
+  },
+  {
+    "id": "D003",
+    "type": "滿額折扣",
+    "threshold": 2610,
+    "discount": 300,
+    "exclusive": false,
+    "stackable": true,
+    "group": "amount"
+  },
+  {
+    "id": "D004",
+    "type": "滿件折扣",
+    "category": "3C",
+    "count": 2,
+    "discount": 100,
+    "exclusive": false,
+    "stackable": true,
+    "group": "count"
+  },
+  {
+    "id": "D005",
+    "type": "滿件折扣",
+    "category": "衣服",
+    "count": 3,
+    "discount": 100,
+    "exclusive": false,
+    "stackable": true,
+    "group": "count"
+  },
+  {
+    "id": "D006",
+    "type": "滿件折扣",
+    "category": "衣服",
+    "count": 5,
+    "discount": 100,
+    "exclusive": false,
+    "stackable": true,
+    "group": "count"
+  },
+  {
+    "id": "D007",
+    "type": "分類折扣",
+    "category": "食品",
+    "percent": 0.85,
+    "exclusive": false,
+    "stackable": true
+  },
+  {
+    "id": "D008",
+    "type": "分類折扣",
+    "category": "日用品",
+    "percent": 0.9,
+    "exclusive": false,
+    "stackable": true
+  },
+  {
+    "id": "D009",
+    "type": "單品折扣",
+    "product_id": "P016",
+    "percent": 0.7,
+    "exclusive": false,
+    "stackable": false
+  },
+  {
+    "id": "D010",
+    "type": "單品折扣",
+    "product_id": "P036",
+    "percent": 0.7,
+    "exclusive": true,
+    "stackable": false
+  },
+  {
+    "id": "D011",
+    "type": "單品折扣",
+    "product_id": "P032",
+    "percent": 0.85,
+    "exclusive": true,
+    "stackable": false
+  },
+  {
+    "id": "D012",
+    "type": "單品折扣",
+    "product_id": "P017",
+    "percent": 0.8,
+    "exclusive": false,
+    "stackable": false
+  },
+  {
+    "id": "D013",
+    "type": "組合折扣",
+    "items": [
+      "P031",
+      "P009"
+    ],
+    "discount": 300,
+    "exclusive": true,
+    "stackable": false
+  },
+  {
+    "id": "D014",
+    "type": "組合折扣",
+    "items": [
+      "P047",
+      "P029"
+    ],
+    "discount": 150,
+    "exclusive": true,
+    "stackable": false
+  },
+  {
+    "id": "D015",
+    "type": "組合折扣",
+    "items": [
+      "P023",
+      "P018"
+    ],
+    "discount": 150,
+    "exclusive": true,
+    "stackable": false
+  },
+  {
+    "id": "D016",
+    "type": "品牌折扣",
+    "brand": "A店",
+    "percent": 0.9,
+    "exclusive": false,
+    "stackable": true
+  },
+  {
+    "id": "D017",
+    "type": "品牌折扣",
+    "brand": "C百貨",
+    "percent": 0.85,
+    "exclusive": false,
+    "stackable": true
+  },
+  {
+    "id": "D018",
+    "type": "限時折扣",
+    "percent": 0.9,
+    "exclusive": true,
+    "stackable": false,
+    "note": "週末限定"
+  },
+  {
+  "id": "D999",
+  "type": "限時折扣",
+  "percent": 0.5,
+  "exclusive": true,
+  "stackable": false
+  },
+  {
+    "id": "D900",
+    "type": "單品折扣",
+    "product_id": "P001",
+    "percent": 0.3,
+    "exclusive": true,
+    "stackable": false,
+    "note": "限量 3 折搶購"
+  },
+  {
+    "id": "D901",
+    "type": "組合折扣",
+    "items": ["P002", "P003"],
+    "discount": 1500,
+    "exclusive": true,
+    "stackable": false,
+    "note": "組合神券：A+B現折1500"
+  },
+  {
+    "id": "D902",
+    "type": "滿額折扣",
+    "threshold": 2000,
+    "discount": 1000,
+    "exclusive": false,
+    "stackable": true,
+    "group": "amount",
+    "note": "滿2000折1000，限時大放送"
+  }
+]
