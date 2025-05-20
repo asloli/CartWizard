@@ -1,7 +1,20 @@
+# Python 編譯產物
 __pycache__/
 *.pyc
+
+# 開發環境設定
 .env
-.ipynb_checkpoints/
-data/results/
-data/training/
 .DS_Store
+.ipynb_checkpoints/
+
+# 專案資料夾中不需追蹤的內容
+/data/results/
+/data/training/
+/data/carts/
+/data/tmp/             # ← 建議加一個暫存用資料夾，未來演算法中常會用到
+
+# Jupyter Notebook 的快取與執行歷史
+*.ipynb_checkpoints
+
+# VSCode 設定（如你用 VSCode 可加）
+.vscode/
