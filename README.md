@@ -34,6 +34,7 @@
 ```text
 CartWizard/
 ├── data/                      # ✅ 測試資料與輸出資料
+│   ├── carts/                 # 兩千多筆購物車模擬樣本（JSON）
 │   ├── raw/                   # 原始商品庫、折扣規則（JSON/CSV）
 │   │   ├── discounts.json
 │   │   └── products.json
