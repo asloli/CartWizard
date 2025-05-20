@@ -23,8 +23,7 @@
 ## 📁 專案資料夾結構
 
 <details>
-<summary>點我展開</summary>
-```
+<summary>點我展開</summary>```
 
 CartWizard/
 ├── data/ // 測試資料與輸出資料
