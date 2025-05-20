@@ -29,38 +29,41 @@
 
 ```text
 CartWizard/
-├── data/                 // 測試資料與輸出資料
-│   ├── raw/              // 原始商品庫、折扣規則（JSON/CSV）
-│   ├── carts/            // 模擬生成的購物車資料
-│   ├── results/          // 拆帳結果資料
-│   └── training/         // AI 訓練資料（X, Y）
+├── data/                 # ✅ 測試資料與輸出資料
+│   ├── raw/              # 原始商品庫、折扣規則（JSON/CSV）
+│   ├── carts/            # 模擬生成的購物車資料
+│   ├── results/          # 拆帳結果資料
+│   └── training/         # AI 訓練資料（X, Y）
+│       ├── X.jsonl
+│       ├── Y.jsonl
+│       ├── X_addon.jsonl
+│       └── Y_addon.jsonl
 │
-├── src/                  // 所有 Python 程式碼
-│   ├── core/             // 核心邏輯：拆帳演算法、加購模擬
+├── src/                  # ✅ 所有 Python 程式碼
+│   ├── core/             # 核心邏輯：拆帳演算法、加購模擬
 │   │   ├── cart.py
 │   │   ├── discount.py
 │   │   └── solver.py
-│   ├── simulate/         // 測資模擬器（購物車、折扣、商品）
+│   ├── simulate/         # 測資模擬器（購物車、折扣、商品）
 │   │   ├── product_gen.py
 │   │   ├── cart_gen.py
 │   │   └── discount_gen.py
-│   ├── ai/               // AI 模型與訓練
+│   ├── ai/               # AI 模型與訓練
 │   │   ├── build_dataset.py
+│   │   ├── build_addon_dataset.py
 │   │   ├── train_model.py
-│   │   └── predict.py
-│   └── utils/            // 工具模組（JSON/CSV處理、格式轉換）
+│   │   └── train_addon_model.py
+│   └── utils/            # 工具模組（JSON/CSV處理、格式轉換）
 │       └── io_utils.py
 │
-├── notebooks/            // 測試、視覺化、分析 Jupyter 筆記本
+├── notebooks/            # 測試、視覺化、分析 Jupyter 筆記本
 │   └── analysis.ipynb
-│
-├── tests/                // 單元測試（pytest 或 unittest）
+├── tests/                # 單元測試（pytest 或 unittest）
 │   └── test_solver.py
-│
-├── README.md             // 專案說明
-├── requirements.txt      // 安裝所需套件
-├── .gitignore            // 忽略項目（建議加入 pycache、*.pyc、/data/results/ 等）
-└── LICENSE               // 授權（可選 MIT 或 CC0）
+├── README.md             # ✅ 專案說明
+├── requirements.txt      # 安裝所需套件
+├── .gitignore            # 忽略項目
+└── LICENSE               # 授權（可選 MIT 或 CC0）
 ```
 
 </details>
