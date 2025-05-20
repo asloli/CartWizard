@@ -7,12 +7,30 @@ from sklearn.metrics import accuracy_score, classification_report
 
 X_PATH = "data/training/X_addon.jsonl"
 Y_PATH = "data/training/Y_addon.jsonl"
+DISCOUNT_PATH = "data/raw/discounts.json"
 CATEGORY_LIST = ['衣服', '食品', '日用品', '3C']
 
+# 載入資料
 def load_jsonl(path):
     with open(path, "r", encoding="utf-8") as f:
         return [json.loads(line) for line in f]
 
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+# ⬇️ 新增特徵欄位：距離最近滿額折扣門檻
+discount_rules = load_json(DISCOUNT_PATH)
+
+def distance_to_nearest_threshold(total_price, discounts):
+    diffs = []
+    for d in discounts:
+        if d['type'] == '滿額折扣':
+            diff = max(0, d['threshold'] - total_price)
+            diffs.append(diff)
+    return min(diffs) if diffs else 0
+
+# ⬇️ 整合強化版特徵提取函式
 def extract_features(cart_item):
     items = cart_item["items"]
     prices = [i["price"] for i in items]
@@ -30,23 +48,27 @@ def extract_features(cart_item):
     for cat in CATEGORY_LIST:
         feature[f"cat_{cat}"] = cat_count.get(cat, 0)
 
+    feature["distance_to_full_discount"] = distance_to_nearest_threshold(
+        feature["total_price"], discount_rules
+    )
+
     return feature
 
+# 類別編碼器
 def build_label_encoder(y_raw):
     labels = set(y['recommended_addon'] for y in y_raw)
     labels = sorted(x for x in labels if x is not None)
     label2id = {l: i for i, l in enumerate(labels)}
-    label2id[None] = len(label2id)  # 最後一位是 None
+    label2id[None] = len(label2id)
     id2label = {v: k for k, v in label2id.items()}
     return label2id, id2label
 
+# 主流程
 def main():
     X_raw = load_jsonl(X_PATH)
     Y_raw = load_jsonl(Y_PATH)
 
-    # 轉換為特徵表與標籤
     X = pd.DataFrame([extract_features(x) for x in X_raw])
-
     label2id, id2label = build_label_encoder(Y_raw)
     y = pd.Series([label2id[y['recommended_addon']] for y in Y_raw])
 
@@ -54,16 +76,13 @@ def main():
     for k, v in label2id.items():
         print(f"  {v:>2} → {k or 'None'}")
 
-    # 切分資料
     split = int(len(X) * 0.8)
     X_train, X_test = X[:split], X[split:]
     y_train, y_test = y[:split], y[split:]
 
-    # 訓練 LightGBM 多類別分類模型
     model = lgb.LGBMClassifier(objective='multiclass', num_class=len(label2id))
     model.fit(X_train, y_train)
 
-    # 預測
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"\n✅ 預測準確率：{acc:.3%}")
@@ -78,7 +97,12 @@ def main():
         print(f"  {correct} 預測: {pred_label or 'None':>5} ｜ 實際: {true_label or 'None':>5}")
 
     print("\n📊 分類報告：")
-    print(classification_report(y_test, y_pred, target_names=[id2label[i] or 'None' for i in sorted(id2label.keys())]))
+    labels_in_test = sorted(set(y_test))
+    print(classification_report(
+        y_test, y_pred,
+        labels=labels_in_test,
+        target_names=[id2label[i] or 'None' for i in labels_in_test]
+    ))
 
 if __name__ == "__main__":
     main()
