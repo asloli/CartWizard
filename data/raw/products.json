@@ -1,602 +1,602 @@
 [
   {
-    "id": "P001",
-    "name": "商品1",
+    "id": "C001",
+    "name": "極簡白色 T 恤",
     "category": "衣服",
-    "price": 1514
+    "price": 2514
   },
   {
-    "id": "P002",
-    "name": "商品2",
+    "id": "C002",
+    "name": "復古牛仔外套",
+    "category": "衣服",
+    "price": 2036
+  },
+  {
+    "id": "C003",
+    "name": "經典黑色連帽外套",
+    "category": "衣服",
+    "price": 1266
+  },
+  {
+    "id": "C004",
+    "name": "夏日花卉洋裝",
+    "category": "衣服",
+    "price": 1519
+  },
+  {
+    "id": "C005",
+    "name": "運動風格短褲",
+    "category": "衣服",
+    "price": 425
+  },
+  {
+    "id": "C006",
+    "name": "素面長袖襯衫",
+    "category": "衣服",
+    "price": 2873
+  },
+  {
+    "id": "C007",
+    "name": "條紋棉麻襯衫",
+    "category": "衣服",
+    "price": 1841
+  },
+  {
+    "id": "C008",
+    "name": "都會風雙排扣大衣",
+    "category": "衣服",
+    "price": 442
+  },
+  {
+    "id": "C009",
+    "name": "百搭針織背心",
+    "category": "衣服",
+    "price": 2217
+  },
+  {
+    "id": "C010",
+    "name": "韓風百褶裙",
+    "category": "衣服",
+    "price": 2849
+  },
+  {
+    "id": "C011",
+    "name": "潮流圖案衛衣",
+    "category": "衣服",
+    "price": 1767
+  },
+  {
+    "id": "C012",
+    "name": "拉鍊運動外套",
+    "category": "衣服",
+    "price": 807
+  },
+  {
+    "id": "C013",
+    "name": "小香風套裝",
+    "category": "衣服",
+    "price": 2508
+  },
+  {
+    "id": "C014",
+    "name": "彈性緊身褲",
+    "category": "衣服",
+    "price": 1755
+  },
+  {
+    "id": "C015",
+    "name": "撞色設計長裙",
+    "category": "衣服",
+    "price": 621
+  },
+  {
+    "id": "C016",
+    "name": "英倫格紋西裝褲",
+    "category": "衣服",
+    "price": 2176
+  },
+  {
+    "id": "C017",
+    "name": "學院風 POLO 衫",
+    "category": "衣服",
+    "price": 1182
+  },
+  {
+    "id": "C018",
+    "name": "透氣運動背心",
+    "category": "衣服",
+    "price": 2768
+  },
+  {
+    "id": "C019",
+    "name": "防曬連帽外套",
+    "category": "衣服",
+    "price": 2833
+  },
+  {
+    "id": "C020",
+    "name": "落肩寬版T恤",
+    "category": "衣服",
+    "price": 1421
+  },
+  {
+    "id": "C021",
+    "name": "刺繡圖案外套",
+    "category": "衣服",
+    "price": 2689
+  },
+  {
+    "id": "C022",
+    "name": "可愛風短袖上衣",
+    "category": "衣服",
+    "price": 1554
+  },
+  {
+    "id": "C023",
+    "name": "簡約黑長裙",
+    "category": "衣服",
+    "price": 1322
+  },
+  {
+    "id": "C024",
+    "name": "無袖棉麻洋裝",
+    "category": "衣服",
+    "price": 479
+  },
+  {
+    "id": "C025",
+    "name": "質感高腰短裙",
+    "category": "衣服",
+    "price": 591
+  },
+  {
+    "id": "C026",
+    "name": "街頭破壞牛仔褲",
+    "category": "衣服",
+    "price": 2212
+  },
+  {
+    "id": "C027",
+    "name": "素色家居服",
+    "category": "衣服",
+    "price": 467
+  },
+  {
+    "id": "C028",
+    "name": "甜美蕾絲上衣",
+    "category": "衣服",
+    "price": 1234
+  },
+  {
+    "id": "C029",
+    "name": "字母印花帽T",
+    "category": "衣服",
+    "price": 2529
+  },
+  {
+    "id": "C030",
+    "name": "經典運動長褲",
+    "category": "衣服",
+    "price": 1739
+  },
+  {
+    "id": "E031",
+    "name": "智慧型手機 X200",
     "category": "3C",
-    "price": 693
+    "price": 1933
   },
   {
-    "id": "P003",
-    "name": "商品3",
-    "category": "衣服",
-    "price": 751
-  },
-  {
-    "id": "P004",
-    "name": "商品4",
-    "category": "衣服",
-    "price": 1050
-  },
-  {
-    "id": "P005",
-    "name": "商品5",
-    "category": "衣服",
-    "price": 1786
-  },
-  {
-    "id": "P006",
-    "name": "商品6",
-    "category": "食品",
-    "price": 485
-  },
-  {
-    "id": "P007",
-    "name": "商品7",
-    "category": "食品",
-    "price": 1056
-  },
-  {
-    "id": "P008",
-    "name": "商品8",
-    "category": "衣服",
-    "price": 207
-  },
-  {
-    "id": "P009",
-    "name": "商品9",
+    "id": "E032",
+    "name": "無線藍牙耳機 Pro",
     "category": "3C",
-    "price": 1498
+    "price": 1770
   },
   {
-    "id": "P010",
-    "name": "商品10",
-    "category": "食品",
-    "price": 1315
-  },
-  {
-    "id": "P011",
-    "name": "商品11",
-    "category": "衣服",
-    "price": 1531
-  },
-  {
-    "id": "P012",
-    "name": "商品12",
+    "id": "E033",
+    "name": "4K 超高清電視",
     "category": "3C",
-    "price": 378
+    "price": 2044
   },
   {
-    "id": "P013",
-    "name": "商品13",
+    "id": "E034",
+    "name": "輕薄筆記型電腦",
     "category": "3C",
-    "price": 1948
+    "price": 1141
   },
   {
-    "id": "P014",
-    "name": "商品14",
-    "category": "衣服",
-    "price": 1503
-  },
-  {
-    "id": "P015",
-    "name": "商品15",
-    "category": "衣服",
-    "price": 352
-  },
-  {
-    "id": "P016",
-    "name": "商品16",
+    "id": "E035",
+    "name": "多功能平板電腦",
     "category": "3C",
-    "price": 1665
+    "price": 2523
   },
   {
-    "id": "P017",
-    "name": "商品17",
-    "category": "衣服",
-    "price": 575
-  },
-  {
-    "id": "P018",
-    "name": "商品18",
-    "category": "食品",
-    "price": 173
-  },
-  {
-    "id": "P019",
-    "name": "商品19",
-    "category": "食品",
-    "price": 1949
-  },
-  {
-    "id": "P020",
-    "name": "商品20",
-    "category": "衣服",
-    "price": 746
-  },
-  {
-    "id": "P021",
-    "name": "商品21",
-    "category": "日用品",
-    "price": 988
-  },
-  {
-    "id": "P022",
-    "name": "商品22",
+    "id": "E036",
+    "name": "迷你行動電源",
     "category": "3C",
-    "price": 1605
+    "price": 600
   },
   {
-    "id": "P023",
-    "name": "商品23",
+    "id": "E037",
+    "name": "曲面電競螢幕",
     "category": "3C",
-    "price": 1079
-  },
-  {
-    "id": "P024",
-    "name": "商品24",
-    "category": "3C",
-    "price": 1765
-  },
-  {
-    "id": "P025",
-    "name": "商品25",
-    "category": "衣服",
-    "price": 1290
-  },
-  {
-    "id": "P026",
-    "name": "商品26",
-    "category": "日用品",
-    "price": 1385
-  },
-  {
-    "id": "P027",
-    "name": "商品27",
-    "category": "3C",
-    "price": 1790
-  },
-  {
-    "id": "P028",
-    "name": "商品28",
-    "category": "衣服",
-    "price": 109
-  },
-  {
-    "id": "P029",
-    "name": "商品29",
-    "category": "日用品",
-    "price": 796
-  },
-  {
-    "id": "P030",
-    "name": "商品30",
-    "category": "食品",
-    "price": 80
-  },
-  {
-    "id": "P031",
-    "name": "商品31",
-    "category": "食品",
-    "price": 1040
-  },
-  {
-    "id": "P032",
-    "name": "商品32",
-    "category": "日用品",
-    "price": 535
-  },
-  {
-    "id": "P033",
-    "name": "商品33",
-    "category": "衣服",
-    "price": 390
-  },
-  {
-    "id": "P034",
-    "name": "商品34",
-    "category": "衣服",
-    "price": 72
-  },
-  {
-    "id": "P035",
-    "name": "商品35",
-    "category": "日用品",
-    "price": 1959
-  },
-  {
-    "id": "P036",
-    "name": "商品36",
-    "category": "食品",
-    "price": 857
-  },
-  {
-    "id": "P037",
-    "name": "商品37",
-    "category": "食品",
-    "price": 1397
-  },
-  {
-    "id": "P038",
-    "name": "商品38",
-    "category": "3C",
-    "price": 1167
-  },
-  {
-    "id": "P039",
-    "name": "商品39",
-    "category": "3C",
-    "price": 1873
-  },
-  {
-    "id": "P040",
-    "name": "商品40",
-    "category": "日用品",
-    "price": 1311
-  },
-  {
-    "id": "P041",
-    "name": "商品41",
-    "category": "衣服",
-    "price": 1290
-  },
-  {
-    "id": "P042",
-    "name": "商品42",
-    "category": "食品",
-    "price": 1440
-  },
-  {
-    "id": "P043",
-    "name": "商品43",
-    "category": "3C",
-    "price": 1017
-  },
-  {
-    "id": "P044",
-    "name": "商品44",
-    "category": "食品",
-    "price": 981
-  },
-  {
-    "id": "P045",
-    "name": "商品45",
-    "category": "食品",
-    "price": 1089
-  },
-  {
-    "id": "P046",
-    "name": "商品46",
-    "category": "食品",
-    "price": 1055
-  },
-  {
-    "id": "P047",
-    "name": "商品47",
-    "category": "衣服",
-    "price": 1972
-  },
-  {
-    "id": "P048",
-    "name": "商品48",
-    "category": "食品",
-    "price": 641
-  },
-  {
-    "id": "P049",
-    "name": "商品49",
-    "category": "3C",
-    "price": 1724
-  },
-  {
-    "id": "P050",
-    "name": "商品50",
-    "category": "衣服",
-    "price": 1560
-  },
-  {
-    "id": "P051",
-    "name": "商品51",
-    "category": "食品",
-    "price": 869
-  },
-  {
-    "id": "P052",
-    "name": "商品52",
-    "category": "3C",
-    "price": 648
-  },
-  {
-    "id": "P053",
-    "name": "商品53",
-    "category": "食品",
-    "price": 1661
-  },
-  {
-    "id": "P054",
-    "name": "商品54",
-    "category": "3C",
-    "price": 1930
-  },
-  {
-    "id": "P055",
-    "name": "商品55",
-    "category": "日用品",
-    "price": 283
-  },
-  {
-    "id": "P056",
-    "name": "商品56",
-    "category": "日用品",
-    "price": 1122
-  },
-  {
-    "id": "P057",
-    "name": "商品57",
-    "category": "日用品",
-    "price": 276
-  },
-  {
-    "id": "P058",
-    "name": "商品58",
-    "category": "食品",
-    "price": 366
-  },
-  {
-    "id": "P059",
-    "name": "商品59",
-    "category": "衣服",
-    "price": 144
-  },
-  {
-    "id": "P060",
-    "name": "商品60",
-    "category": "日用品",
-    "price": 1302
-  },
-  {
-    "id": "P061",
-    "name": "商品61",
-    "category": "食品",
-    "price": 1873
-  },
-  {
-    "id": "P062",
-    "name": "商品62",
-    "category": "食品",
-    "price": 948
-  },
-  {
-    "id": "P063",
-    "name": "商品63",
-    "category": "食品",
-    "price": 1865
-  },
-  {
-    "id": "P064",
-    "name": "商品64",
-    "category": "食品",
-    "price": 1661
-  },
-  {
-    "id": "P065",
-    "name": "商品65",
-    "category": "日用品",
-    "price": 828
-  },
-  {
-    "id": "P066",
-    "name": "商品66",
-    "category": "衣服",
-    "price": 716
-  },
-  {
-    "id": "P067",
-    "name": "商品67",
-    "category": "食品",
-    "price": 1330
-  },
-  {
-    "id": "P068",
-    "name": "商品68",
-    "category": "食品",
-    "price": 887
-  },
-  {
-    "id": "P069",
-    "name": "商品69",
-    "category": "食品",
-    "price": 1347
-  },
-  {
-    "id": "P070",
-    "name": "商品70",
-    "category": "3C",
-    "price": 133
-  },
-  {
-    "id": "P071",
-    "name": "商品71",
-    "category": "食品",
-    "price": 1380
-  },
-  {
-    "id": "P072",
-    "name": "商品72",
-    "category": "食品",
-    "price": 1844
-  },
-  {
-    "id": "P073",
-    "name": "商品73",
-    "category": "3C",
-    "price": 444
-  },
-  {
-    "id": "P074",
-    "name": "商品74",
-    "category": "食品",
     "price": 338
   },
   {
-    "id": "P075",
-    "name": "商品75",
-    "category": "食品",
-    "price": 538
-  },
-  {
-    "id": "P076",
-    "name": "商品76",
-    "category": "日用品",
-    "price": 1112
-  },
-  {
-    "id": "P077",
-    "name": "商品77",
-    "category": "日用品",
-    "price": 505
-  },
-  {
-    "id": "P078",
-    "name": "商品78",
-    "category": "食品",
-    "price": 426
-  },
-  {
-    "id": "P079",
-    "name": "商品79",
-    "category": "衣服",
-    "price": 1374
-  },
-  {
-    "id": "P080",
-    "name": "商品80",
+    "id": "E038",
+    "name": "USB-C 多合一轉接器",
     "category": "3C",
-    "price": 1253
+    "price": 1722
   },
   {
-    "id": "P081",
-    "name": "商品81",
-    "category": "食品",
-    "price": 1693
-  },
-  {
-    "id": "P082",
-    "name": "商品82",
-    "category": "食品",
-    "price": 1046
-  },
-  {
-    "id": "P083",
-    "name": "商品83",
-    "category": "日用品",
-    "price": 1539
-  },
-  {
-    "id": "P084",
-    "name": "商品84",
-    "category": "衣服",
-    "price": 1139
-  },
-  {
-    "id": "P085",
-    "name": "商品85",
-    "category": "衣服",
-    "price": 1547
-  },
-  {
-    "id": "P086",
-    "name": "商品86",
-    "category": "日用品",
-    "price": 1509
-  },
-  {
-    "id": "P087",
-    "name": "商品87",
-    "category": "衣服",
-    "price": 848
-  },
-  {
-    "id": "P088",
-    "name": "商品88",
-    "category": "衣服",
-    "price": 164
-  },
-  {
-    "id": "P089",
-    "name": "商品89",
-    "category": "衣服",
-    "price": 1415
-  },
-  {
-    "id": "P090",
-    "name": "商品90",
-    "category": "日用品",
-    "price": 1819
-  },
-  {
-    "id": "P091",
-    "name": "商品91",
+    "id": "E039",
+    "name": "無線滑鼠",
     "category": "3C",
-    "price": 121
+    "price": 2382
   },
   {
-    "id": "P092",
-    "name": "商品92",
-    "category": "食品",
-    "price": 563
-  },
-  {
-    "id": "P093",
-    "name": "商品93",
+    "id": "E040",
+    "name": "機械式鍵盤",
     "category": "3C",
-    "price": 1454
+    "price": 2934
   },
   {
-    "id": "P094",
-    "name": "商品94",
-    "category": "日用品",
-    "price": 1693
-  },
-  {
-    "id": "P095",
-    "name": "商品95",
-    "category": "日用品",
-    "price": 1119
-  },
-  {
-    "id": "P096",
-    "name": "商品96",
-    "category": "衣服",
-    "price": 1924
-  },
-  {
-    "id": "P097",
-    "name": "商品97",
+    "id": "E041",
+    "name": "真無線耳塞",
     "category": "3C",
-    "price": 890
+    "price": 2272
   },
   {
-    "id": "P098",
-    "name": "商品98",
-    "category": "衣服",
-    "price": 1033
-  },
-  {
-    "id": "P099",
-    "name": "商品99",
+    "id": "E042",
+    "name": "高音質喇叭",
     "category": "3C",
-    "price": 1352
+    "price": 2047
   },
   {
-    "id": "P100",
-    "name": "商品100",
-    "category": "衣服",
-    "price": 1056
+    "id": "E043",
+    "name": "車用手機架",
+    "category": "3C",
+    "price": 1629
+  },
+  {
+    "id": "E044",
+    "name": "智慧手環",
+    "category": "3C",
+    "price": 642
+  },
+  {
+    "id": "E045",
+    "name": "防水運動攝影機",
+    "category": "3C",
+    "price": 1711
+  },
+  {
+    "id": "E046",
+    "name": "手機穩定器",
+    "category": "3C",
+    "price": 2137
+  },
+  {
+    "id": "E047",
+    "name": "聲控家用音箱",
+    "category": "3C",
+    "price": 2051
+  },
+  {
+    "id": "E048",
+    "name": "USB 隨身碟 128GB",
+    "category": "3C",
+    "price": 1761
+  },
+  {
+    "id": "E049",
+    "name": "雷射印表機",
+    "category": "3C",
+    "price": 322
+  },
+  {
+    "id": "E050",
+    "name": "手寫筆 for 平板",
+    "category": "3C",
+    "price": 1158
+  },
+  {
+    "id": "E051",
+    "name": "雙頻 Wi-Fi 路由器",
+    "category": "3C",
+    "price": 374
+  },
+  {
+    "id": "E052",
+    "name": "雲端攝影機",
+    "category": "3C",
+    "price": 2839
+  },
+  {
+    "id": "E053",
+    "name": "直播專用麥克風",
+    "category": "3C",
+    "price": 1310
+  },
+  {
+    "id": "E054",
+    "name": "外接式硬碟",
+    "category": "3C",
+    "price": 474
+  },
+  {
+    "id": "E055",
+    "name": "行動網路分享器",
+    "category": "3C",
+    "price": 1462
+  },
+  {
+    "id": "E056",
+    "name": "自拍補光燈",
+    "category": "3C",
+    "price": 711
+  },
+  {
+    "id": "E057",
+    "name": "多孔延長線",
+    "category": "3C",
+    "price": 2227
+  },
+  {
+    "id": "E058",
+    "name": "快充插頭",
+    "category": "3C",
+    "price": 491
+  },
+  {
+    "id": "E059",
+    "name": "降噪耳罩式耳機",
+    "category": "3C",
+    "price": 658
+  },
+  {
+    "id": "E060",
+    "name": "電競滑鼠墊",
+    "category": "3C",
+    "price": 2998
+  },
+  {
+    "id": "H061",
+    "name": "智能掃地機器人",
+    "category": "家電",
+    "price": 1794
+  },
+  {
+    "id": "H062",
+    "name": "多功能氣炸鍋",
+    "category": "家電",
+    "price": 2397
+  },
+  {
+    "id": "H063",
+    "name": "節能冷氣機",
+    "category": "家電",
+    "price": 2747
+  },
+  {
+    "id": "H064",
+    "name": "高速果汁機",
+    "category": "家電",
+    "price": 2331
+  },
+  {
+    "id": "H065",
+    "name": "智慧洗衣機",
+    "category": "家電",
+    "price": 2664
+  },
+  {
+    "id": "H066",
+    "name": "雙門冰箱",
+    "category": "家電",
+    "price": 1606
+  },
+  {
+    "id": "H067",
+    "name": "微波爐",
+    "category": "家電",
+    "price": 2369
+  },
+  {
+    "id": "H068",
+    "name": "智能電鍋",
+    "category": "家電",
+    "price": 1052
+  },
+  {
+    "id": "H069",
+    "name": "除濕機",
+    "category": "家電",
+    "price": 1343
+  },
+  {
+    "id": "H070",
+    "name": "陶瓷電暖器",
+    "category": "家電",
+    "price": 2949
+  },
+  {
+    "id": "H071",
+    "name": "空氣清淨機",
+    "category": "家電",
+    "price": 2282
+  },
+  {
+    "id": "H072",
+    "name": "多功能蒸氣熨斗",
+    "category": "家電",
+    "price": 436
+  },
+  {
+    "id": "H073",
+    "name": "電熱水瓶",
+    "category": "家電",
+    "price": 2649
+  },
+  {
+    "id": "H074",
+    "name": "觸控烤箱",
+    "category": "家電",
+    "price": 603
+  },
+  {
+    "id": "H075",
+    "name": "吸塵器",
+    "category": "家電",
+    "price": 2443
+  },
+  {
+    "id": "H076",
+    "name": "洗碗機",
+    "category": "家電",
+    "price": 1558
+  },
+  {
+    "id": "H077",
+    "name": "熱水器",
+    "category": "家電",
+    "price": 1190
+  },
+  {
+    "id": "H078",
+    "name": "電動刮鬍刀",
+    "category": "家電",
+    "price": 2511
+  },
+  {
+    "id": "H079",
+    "name": "迷你冰箱",
+    "category": "家電",
+    "price": 1738
+  },
+  {
+    "id": "H080",
+    "name": "定時開關插座",
+    "category": "家電",
+    "price": 1906
+  },
+  {
+    "id": "O081",
+    "name": "兒童益智拼圖",
+    "category": "其他",
+    "price": 1053
+  },
+  {
+    "id": "O082",
+    "name": "戶外露營帳篷",
+    "category": "其他",
+    "price": 272
+  },
+  {
+    "id": "O083",
+    "name": "瑜伽墊",
+    "category": "其他",
+    "price": 1210
+  },
+  {
+    "id": "O084",
+    "name": "寵物自動餵食器",
+    "category": "其他",
+    "price": 1776
+  },
+  {
+    "id": "O085",
+    "name": "旅行用行李箱",
+    "category": "其他",
+    "price": 2479
+  },
+  {
+    "id": "O086",
+    "name": "收納整理盒",
+    "category": "其他",
+    "price": 2337
+  },
+  {
+    "id": "O087",
+    "name": "馬克杯組",
+    "category": "其他",
+    "price": 1947
+  },
+  {
+    "id": "O088",
+    "name": "手機支架",
+    "category": "其他",
+    "price": 2896
+  },
+  {
+    "id": "O089",
+    "name": "LED 閱讀燈",
+    "category": "其他",
+    "price": 1427
+  },
+  {
+    "id": "O090",
+    "name": "折疊收納椅",
+    "category": "其他",
+    "price": 2446
+  },
+  {
+    "id": "O091",
+    "name": "防潑水背包",
+    "category": "其他",
+    "price": 2746
+  },
+  {
+    "id": "O092",
+    "name": "登山用手杖",
+    "category": "其他",
+    "price": 2408
+  },
+  {
+    "id": "O093",
+    "name": "抗 UV 遮陽帽",
+    "category": "其他",
+    "price": 1237
+  },
+  {
+    "id": "O094",
+    "name": "自動雨傘",
+    "category": "其他",
+    "price": 1282
+  },
+  {
+    "id": "O095",
+    "name": "壓力釋放握力球",
+    "category": "其他",
+    "price": 2227
+  },
+  {
+    "id": "O096",
+    "name": "手沖咖啡壺",
+    "category": "其他",
+    "price": 1445
+  },
+  {
+    "id": "O097",
+    "name": "護眼檯燈",
+    "category": "其他",
+    "price": 1448
+  },
+  {
+    "id": "O098",
+    "name": "辦公桌整理架",
+    "category": "其他",
+    "price": 530
+  },
+  {
+    "id": "O099",
+    "name": "掛鉤壁貼",
+    "category": "其他",
+    "price": 2692
+  },
+  {
+    "id": "O100",
+    "name": "防蚊燈",
+    "category": "其他",
+    "price": 834
   }
 ]

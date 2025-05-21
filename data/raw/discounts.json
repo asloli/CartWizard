@@ -2,198 +2,352 @@
   {
     "id": "D001",
     "type": "滿額折扣",
-    "threshold": 1307,
-    "discount": 200,
-    "exclusive": false,
-    "stackable": true,
-    "group": "amount"
+    "threshold": 3302,
+    "amount": 483,
+    "category": "衣服",
+    "description": "衣服類商品滿 $3302 折 $483"
   },
   {
     "id": "D002",
     "type": "滿額折扣",
-    "threshold": 2335,
-    "discount": 300,
-    "exclusive": false,
-    "stackable": true,
-    "group": "amount"
+    "threshold": 3658,
+    "amount": 375,
+    "category": "衣服",
+    "description": "衣服類商品滿 $3658 折 $375"
   },
   {
     "id": "D003",
     "type": "滿額折扣",
-    "threshold": 2610,
-    "discount": 300,
-    "exclusive": false,
-    "stackable": true,
-    "group": "amount"
+    "threshold": 2832,
+    "amount": 217,
+    "category": "衣服",
+    "description": "衣服類商品滿 $2832 折 $217"
   },
   {
     "id": "D004",
-    "type": "滿件折扣",
+    "type": "滿額折扣",
+    "threshold": 2861,
+    "amount": 293,
     "category": "3C",
-    "count": 2,
-    "discount": 100,
-    "exclusive": false,
-    "stackable": true,
-    "group": "count"
+    "description": "3C類商品滿 $2861 折 $293"
   },
   {
     "id": "D005",
-    "type": "滿件折扣",
-    "category": "衣服",
-    "count": 3,
-    "discount": 100,
-    "exclusive": false,
-    "stackable": true,
-    "group": "count"
+    "type": "滿額折扣",
+    "threshold": 1722,
+    "amount": 467,
+    "category": "3C",
+    "description": "3C類商品滿 $1722 折 $467"
   },
   {
     "id": "D006",
-    "type": "滿件折扣",
-    "category": "衣服",
-    "count": 5,
-    "discount": 100,
-    "exclusive": false,
-    "stackable": true,
-    "group": "count"
+    "type": "滿額折扣",
+    "threshold": 2531,
+    "amount": 407,
+    "category": "3C",
+    "description": "3C類商品滿 $2531 折 $407"
   },
   {
     "id": "D007",
-    "type": "分類折扣",
-    "category": "食品",
-    "percent": 0.85,
-    "exclusive": false,
-    "stackable": true
+    "type": "滿額折扣",
+    "threshold": 3247,
+    "amount": 497,
+    "category": "家電",
+    "description": "家電類商品滿 $3247 折 $497"
   },
   {
     "id": "D008",
-    "type": "分類折扣",
-    "category": "日用品",
-    "percent": 0.9,
-    "exclusive": false,
-    "stackable": true
+    "type": "滿額折扣",
+    "threshold": 3194,
+    "amount": 403,
+    "category": "家電",
+    "description": "家電類商品滿 $3194 折 $403"
   },
   {
     "id": "D009",
-    "type": "單品折扣",
-    "product_id": "P016",
-    "percent": 0.7,
-    "exclusive": false,
-    "stackable": false
+    "type": "滿額折扣",
+    "threshold": 3246,
+    "amount": 392,
+    "category": "家電",
+    "description": "家電類商品滿 $3246 折 $392"
   },
   {
     "id": "D010",
-    "type": "單品折扣",
-    "product_id": "P036",
-    "percent": 0.7,
-    "exclusive": true,
-    "stackable": false
+    "type": "滿額折扣",
+    "threshold": 2265,
+    "amount": 361,
+    "category": "其他",
+    "description": "其他類商品滿 $2265 折 $361"
   },
   {
     "id": "D011",
-    "type": "單品折扣",
-    "product_id": "P032",
-    "percent": 0.85,
-    "exclusive": true,
-    "stackable": false
+    "type": "滿額折扣",
+    "threshold": 1724,
+    "amount": 410,
+    "category": "其他",
+    "description": "其他類商品滿 $1724 折 $410"
   },
   {
     "id": "D012",
-    "type": "單品折扣",
-    "product_id": "P017",
-    "percent": 0.8,
-    "exclusive": false,
-    "stackable": false
+    "type": "滿額折扣",
+    "threshold": 2140,
+    "amount": 423,
+    "category": "其他",
+    "description": "其他類商品滿 $2140 折 $423"
   },
   {
     "id": "D013",
-    "type": "組合折扣",
+    "type": "滿件折扣",
     "items": [
-      "P031",
-      "P009"
+      "C022",
+      "C005"
     ],
-    "discount": 300,
-    "exclusive": true,
-    "stackable": false
+    "count": 3,
+    "amount": 338,
+    "description": "購買指定商品滿 3 件折 $338"
   },
   {
     "id": "D014",
-    "type": "組合折扣",
+    "type": "滿件折扣",
     "items": [
-      "P047",
-      "P029"
+      "C004",
+      "C029",
+      "C009"
     ],
-    "discount": 150,
-    "exclusive": true,
-    "stackable": false
+    "count": 3,
+    "amount": 224,
+    "description": "購買指定商品滿 3 件折 $224"
   },
   {
     "id": "D015",
-    "type": "組合折扣",
+    "type": "滿件折扣",
     "items": [
-      "P023",
-      "P018"
+      "C003",
+      "C001",
+      "C015",
+      "C014",
+      "C019"
     ],
-    "discount": 150,
-    "exclusive": true,
-    "stackable": false
+    "count": 3,
+    "amount": 336,
+    "description": "購買指定商品滿 3 件折 $336"
   },
   {
     "id": "D016",
-    "type": "品牌折扣",
-    "brand": "A店",
-    "percent": 0.9,
-    "exclusive": false,
-    "stackable": true
+    "type": "滿件折扣",
+    "items": [
+      "E051",
+      "E054",
+      "E037",
+      "E044",
+      "E052"
+    ],
+    "count": 3,
+    "amount": 331,
+    "description": "購買指定商品滿 3 件折 $331"
   },
   {
     "id": "D017",
-    "type": "品牌折扣",
-    "brand": "C百貨",
-    "percent": 0.85,
-    "exclusive": false,
-    "stackable": true
+    "type": "滿件折扣",
+    "items": [
+      "E036",
+      "E035",
+      "E037",
+      "E053",
+      "E052"
+    ],
+    "count": 3,
+    "amount": 308,
+    "description": "購買指定商品滿 3 件折 $308"
   },
   {
     "id": "D018",
-    "type": "限時折扣",
-    "percent": 0.9,
-    "exclusive": true,
-    "stackable": false,
-    "note": "週末限定"
+    "type": "滿件折扣",
+    "items": [
+      "E037",
+      "E052",
+      "E034"
+    ],
+    "count": 4,
+    "amount": 315,
+    "description": "購買指定商品滿 4 件折 $315"
   },
   {
-  "id": "D999",
-  "type": "限時折扣",
-  "percent": 0.5,
-  "exclusive": true,
-  "stackable": false
+    "id": "D019",
+    "type": "滿件折扣",
+    "items": [
+      "H061",
+      "H077",
+      "H063"
+    ],
+    "count": 2,
+    "amount": 162,
+    "description": "購買指定商品滿 2 件折 $162"
   },
   {
-    "id": "D900",
-    "type": "單品折扣",
-    "product_id": "P001",
-    "percent": 0.3,
-    "exclusive": true,
-    "stackable": false,
-    "note": "限量 3 折搶購"
+    "id": "D020",
+    "type": "滿件折扣",
+    "items": [
+      "H063",
+      "H066",
+      "H079"
+    ],
+    "count": 3,
+    "amount": 326,
+    "description": "購買指定商品滿 3 件折 $326"
   },
   {
-    "id": "D901",
+    "id": "D021",
+    "type": "滿件折扣",
+    "items": [
+      "H069",
+      "H075",
+      "H063",
+      "H067"
+    ],
+    "count": 3,
+    "amount": 200,
+    "description": "購買指定商品滿 3 件折 $200"
+  },
+  {
+    "id": "D022",
+    "type": "滿件折扣",
+    "items": [
+      "O087",
+      "O096"
+    ],
+    "count": 3,
+    "amount": 352,
+    "description": "購買指定商品滿 3 件折 $352"
+  },
+  {
+    "id": "D023",
+    "type": "滿件折扣",
+    "items": [
+      "O091",
+      "O090",
+      "O082",
+      "O099",
+      "O089"
+    ],
+    "count": 2,
+    "amount": 157,
+    "description": "購買指定商品滿 2 件折 $157"
+  },
+  {
+    "id": "D024",
+    "type": "滿件折扣",
+    "items": [
+      "O083",
+      "O085"
+    ],
+    "count": 4,
+    "amount": 331,
+    "description": "購買指定商品滿 4 件折 $331"
+  },
+  {
+    "id": "D025",
     "type": "組合折扣",
-    "items": ["P002", "P003"],
-    "discount": 1500,
-    "exclusive": true,
-    "stackable": false,
-    "note": "組合神券：A+B現折1500"
+    "items": [
+      "H071",
+      "E048",
+      "E049"
+    ],
+    "amount": 413,
+    "description": "指定組合商品搭配折 $413"
   },
   {
-    "id": "D902",
-    "type": "滿額折扣",
-    "threshold": 2000,
-    "discount": 1000,
-    "exclusive": false,
-    "stackable": true,
-    "group": "amount",
-    "note": "滿2000折1000，限時大放送"
+    "id": "D026",
+    "type": "組合折扣",
+    "items": [
+      "C029",
+      "E044",
+      "C010"
+    ],
+    "amount": 378,
+    "description": "指定組合商品搭配折 $378"
+  },
+  {
+    "id": "D027",
+    "type": "組合折扣",
+    "items": [
+      "C020",
+      "H074",
+      "E057"
+    ],
+    "amount": 633,
+    "description": "指定組合商品搭配折 $633"
+  },
+  {
+    "id": "D028",
+    "type": "組合折扣",
+    "items": [
+      "H072",
+      "C023",
+      "E040"
+    ],
+    "amount": 671,
+    "description": "指定組合商品搭配折 $671"
+  },
+  {
+    "id": "D029",
+    "type": "組合折扣",
+    "items": [
+      "C024",
+      "C006",
+      "H062"
+    ],
+    "amount": 635,
+    "description": "指定組合商品搭配折 $635"
+  },
+  {
+    "id": "D030",
+    "type": "獨立折扣",
+    "items": [
+      "C004"
+    ],
+    "amount": 481,
+    "exclusive": true,
+    "description": "夏日花卉洋裝 可獨享折扣 $481（不可併用）"
+  },
+  {
+    "id": "D031",
+    "type": "獨立折扣",
+    "items": [
+      "C007"
+    ],
+    "amount": 1043,
+    "exclusive": true,
+    "description": "條紋棉麻襯衫 可獨享折扣 $1043（不可併用）"
+  },
+  {
+    "id": "D032",
+    "type": "獨立折扣",
+    "items": [
+      "E044"
+    ],
+    "amount": 380,
+    "exclusive": true,
+    "description": "智慧手環 可獨享折扣 $380（不可併用）"
+  },
+  {
+    "id": "D033",
+    "type": "獨立折扣",
+    "items": [
+      "E057"
+    ],
+    "amount": 730,
+    "exclusive": true,
+    "description": "多孔延長線 可獨享折扣 $730（不可併用）"
+  },
+  {
+    "id": "D034",
+    "type": "獨立折扣",
+    "items": [
+      "E048"
+    ],
+    "amount": 924,
+    "exclusive": true,
+    "description": "USB 隨身碟 128GB 可獨享折扣 $924（不可併用）"
   }
 ]

@@ -1,68 +1,47 @@
 import json
 import pandas as pd
 import lightgbm as lgb
-from collections import Counter
+from src.ai.train_addon_model import extract_features
 
-# 模型與標籤對應路徑
 MODEL_PATH = "data/training/addon_model.txt"
-LABEL_MAP_PATH = "data/training/label2id.json"
-CATEGORY_LIST = ['衣服', '食品', '日用品', '3C']
+LABEL2ID_PATH = "data/training/label2id.json"
+PRODUCTS_PATH = "data/raw/products.json"
 
-def extract_features(cart, discount_rules):
-    items = cart["items"]
-    prices = [i["price"] for i in items]
-    categories = [i["category"] for i in items]
-    addon = cart.get("addon", {"price": 0})
-
-    feature = {
-        "item_count": len(items),
-        "total_price": sum(prices),
-        "avg_price": sum(prices) / len(prices) if items else 0,
-        "max_price": max(prices),
-        "min_price": min(prices),
-        "addon_price": addon.get("price", 0),
-        "saved_by_addon": cart.get("saved_by_addon", 0),
-        "triggered_discounts": cart.get("triggered_discounts", 0),
-    }
-
-    cat_count = Counter(categories)
-    for cat in CATEGORY_LIST:
-        feature[f"cat_{cat}"] = cat_count.get(cat, 0)
-
-    # 距離最近滿額門檻
-    full_thresholds = [d["threshold"] for d in discount_rules if d["type"] == "滿額折扣"]
-    if full_thresholds:
-        feature["distance_to_full_discount"] = min(
-            [max(0, th - feature["total_price"]) for th in full_thresholds]
-        )
-    else:
-        feature["distance_to_full_discount"] = 0
-
-    return feature
-
-def predict_addon(cart_path, discount_path):
-    with open(cart_path, "r", encoding="utf-8") as f:
-        cart = json.load(f)
-    with open(discount_path, "r", encoding="utf-8") as f:
-        discount_rules = json.load(f)
-    with open(LABEL_MAP_PATH, "r", encoding="utf-8") as f:
+# 載入模型與類別編碼
+def load_model():
+    model = lgb.Booster(model_file=MODEL_PATH)
+    with open(LABEL2ID_PATH, encoding="utf-8") as f:
         label2id = json.load(f)
     id2label = {v: k for k, v in label2id.items()}
+    return model, id2label
 
-    model = lgb.Booster(model_file=MODEL_PATH)
-    feat = extract_features(cart, discount_rules)
-    X = pd.DataFrame([feat])
-    pred_id = int(model.predict(X).argmax())
-    pred_label = id2label.get(pred_id, None)
+# 單次預測：傳入購物車資料，回傳推薦商品 ID 或 None
+def recommend_addon(cart_data):
+    model, id2label = load_model()
+    with open(PRODUCTS_PATH, encoding="utf-8") as f:
+        products = json.load(f)
 
-    print(f"\n🛒 此購物車推薦加購商品為：{pred_label or 'None'}")
+    base_items = cart_data["items"]
+    base_ids = set(i["id"] for i in base_items)
 
-def recommend_addon(cart):
-    """測試用假推薦函式，回傳隨機推薦（真模型請自行導入）"""
-    for item in cart["items"]:
-        if item["category"] == "衣服":
-            return "P006"  # 假設這是推薦商品
-    return None
+    candidates = []
+    for p in products:
+        if p["id"] in base_ids:
+            continue
+        sample = {
+            "items": base_items,
+            "addon": p
+        }
+        feature = extract_features(sample)
+        candidates.append((p["id"], feature))
 
-if __name__ == "__main__":
-    predict_addon("data/carts/cart_001.json", "data/raw/discounts.json")
+    if not candidates:
+        return None
+
+    df = pd.DataFrame([f for _, f in candidates])
+    preds = model.predict(df)
+    top_idx = preds.argmax()
+    top_label = int(preds[top_idx].argmax()) if preds.ndim == 2 else preds.argmax()
+    predicted_addon = id2label.get(top_label)
+
+    return predicted_addon if predicted_addon not in [None, "None"] else None

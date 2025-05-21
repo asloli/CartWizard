@@ -19,6 +19,9 @@ __pycache__/
 /data/carts/
 /data/tmp/               # 暫存資料夾（演算法中可用）
 
+/data/training/*.txt
+/data/training/*.jsonl
+
 # -----------------------------
 # 📒 Jupyter Notebook 快取
 # -----------------------------

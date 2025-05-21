@@ -1,0 +1,87 @@
+{
+  "cart_id": "sim_P002_P002_P003_P003_P009_P009_P018_P018_P023_P023_P029_P029_P031_P031_P047_P047",
+  "base_items": [
+    {
+      "id": "P002",
+      "price": 693,
+      "category": "3C"
+    },
+    {
+      "id": "P002",
+      "price": 693,
+      "category": "3C"
+    },
+    {
+      "id": "P003",
+      "price": 751,
+      "category": "衣服"
+    },
+    {
+      "id": "P003",
+      "price": 751,
+      "category": "衣服"
+    },
+    {
+      "id": "P009",
+      "price": 1498,
+      "category": "3C"
+    },
+    {
+      "id": "P009",
+      "price": 1498,
+      "category": "3C"
+    },
+    {
+      "id": "P018",
+      "price": 173,
+      "category": "食品"
+    },
+    {
+      "id": "P018",
+      "price": 173,
+      "category": "食品"
+    },
+    {
+      "id": "P023",
+      "price": 1079,
+      "category": "3C"
+    },
+    {
+      "id": "P023",
+      "price": 1079,
+      "category": "3C"
+    },
+    {
+      "id": "P029",
+      "price": 796,
+      "category": "日用品"
+    },
+    {
+      "id": "P029",
+      "price": 796,
+      "category": "日用品"
+    },
+    {
+      "id": "P031",
+      "price": 1040,
+      "category": "食品"
+    },
+    {
+      "id": "P031",
+      "price": 1040,
+      "category": "食品"
+    },
+    {
+      "id": "P047",
+      "price": 1972,
+      "category": "衣服"
+    },
+    {
+      "id": "P047",
+      "price": 1972,
+      "category": "衣服"
+    }
+  ],
+  "recommended": "P006",
+  "accepted": true
+}
