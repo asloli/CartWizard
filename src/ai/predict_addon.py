@@ -57,5 +57,12 @@ def predict_addon(cart_path, discount_path):
 
     print(f"\n🛒 此購物車推薦加購商品為：{pred_label or 'None'}")
 
+def recommend_addon(cart):
+    """測試用假推薦函式，回傳隨機推薦（真模型請自行導入）"""
+    for item in cart["items"]:
+        if item["category"] == "衣服":
+            return "P006"  # 假設這是推薦商品
+    return None
+
 if __name__ == "__main__":
     predict_addon("data/carts/cart_001.json", "data/raw/discounts.json")
