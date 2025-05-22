@@ -1,0 +1,105 @@
+{
+  "cart_id": "auto_2693",
+  "items": [
+    {
+      "id": "E034",
+      "price": 1141,
+      "category": "3C"
+    },
+    {
+      "id": "C015",
+      "price": 621,
+      "category": "衣服"
+    },
+    {
+      "id": "E051",
+      "price": 374,
+      "category": "3C"
+    },
+    {
+      "id": "E040",
+      "price": 2934,
+      "category": "3C"
+    },
+    {
+      "id": "C008",
+      "price": 442,
+      "category": "衣服"
+    },
+    {
+      "id": "C025",
+      "price": 591,
+      "category": "衣服"
+    },
+    {
+      "id": "C010",
+      "price": 2849,
+      "category": "衣服"
+    },
+    {
+      "id": "C016",
+      "price": 2176,
+      "category": "衣服"
+    },
+    {
+      "id": "E035",
+      "price": 2523,
+      "category": "3C"
+    },
+    {
+      "id": "C006",
+      "price": 2873,
+      "category": "衣服"
+    },
+    {
+      "id": "E036",
+      "price": 600,
+      "category": "3C"
+    },
+    {
+      "id": "C030",
+      "price": 1739,
+      "category": "衣服"
+    },
+    {
+      "id": "H074",
+      "price": 603,
+      "category": "家電"
+    },
+    {
+      "id": "O082",
+      "price": 272,
+      "category": "其他"
+    },
+    {
+      "id": "H068",
+      "price": 1052,
+      "category": "家電"
+    },
+    {
+      "id": "E052",
+      "price": 2839,
+      "category": "3C"
+    },
+    {
+      "id": "E037",
+      "price": 338,
+      "category": "3C"
+    },
+    {
+      "id": "H062",
+      "price": 2397,
+      "category": "家電"
+    },
+    {
+      "id": "C020",
+      "price": 1421,
+      "category": "衣服"
+    },
+    {
+      "id": "O087",
+      "price": 1947,
+      "category": "其他"
+    }
+  ]
+}
