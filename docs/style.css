@@ -1,0 +1,144 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background: #f5f5f5;
+}
+
+h1 {
+  color: #333;
+}
+
+input[type="file"] {
+  margin: 1rem 0;
+}
+/* ─── 發票卡片 ───────────────────────── */
+.invoice-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: box-shadow .2s ease;
+}
+.invoice-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 標題 */
+.invoice-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+/* 商品列 */
+.item-line {
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+/* 小計 */
+.total {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #111;
+}
+
+/* ─── 折扣標籤 ───────────────────────── */
+.discount-header {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* 折扣摘要行 */
+.discount-summary {
+  margin: 6px 0;
+  padding: 6px 12px;
+  border-left: 4px solid transparent;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+/* 滿額折扣 → 綠系 */
+.discount-summary.滿額折扣 {
+  background-color: #e8f5e9;
+  border-color: #4caf50;
+  color: #256029;
+}
+
+/* 滿件折扣 → 橙系 */
+.discount-summary.滿件折扣 {
+  background-color: #fff8e1;
+  border-color: #ff9800;
+  color: #8a5a00;
+}
+
+/* 組合折扣 → 藍系 */
+.discount-summary.組合折扣 {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  color: #0b3c6d;
+}
+
+/* 其他類型 → 灰系 */
+.discount-summary:not(.滿額折扣):not(.滿件折扣):not(.組合折扣) {
+  background-color: #f5f5f5;
+  border-color: #757575;
+  color: #212121;
+}
+
+
+/* 讓 badges 自動換行並有間距 */
+.discount-badge {
+  display: inline-block;
+  margin: 6px 8px 6px 0;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* 按 type 上色 */
+.discount-badge.滿額折扣 {
+  background-color: #4caf50;  /* 綠 */
+}
+.discount-badge.滿件折扣 {
+  background-color: #ff9800;  /* 橙 */
+}
+.discount-badge.組合折扣 {
+  background-color: #2196f3;  /* 藍 */
+}
+/* 預設灰色 */
+.discount-badge:not(.滿額折扣):not(.滿件折扣):not(.組合折扣) {
+  background-color: #777;
+}
+
+/* ─── 結帳總覽 ───────────────────────── */
+.summary-card {
+  background: #f9f9f9;
+  border-top: 2px solid #ccc;
+  padding: 16px;
+  margin-bottom: 32px;
+}
+.summary-card h3 {
+  margin-top: 0;
+  font-size: 1.15em;
+}
+.summary-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+.summary-card li {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.summary-line {
+  margin: 4px 0;
+  font-size: 1em;
+}
