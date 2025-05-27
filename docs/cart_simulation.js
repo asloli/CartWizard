@@ -162,30 +162,42 @@ async function updateSimulation() {
   });
 
   // -- 加購推薦 API --
+    // —— 呼叫 02 頁面同樣的「recommend_addon」——
+  const fd2 = new FormData();
+  fd2.append(
+    'file',
+    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
+    'cart.json'
+  );
+  let recJson;
   try {
-    const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
-      method:'POST',
-      mode:'cors',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({items})
+    const resp2 = await fetch(`${API_BASE}/recommend_addon`, {
+      method: 'POST',
+      body: fd2,
+      mode: 'cors'
     });
-    const addon = await resp2.json();
-
-    const sec = document.createElement('div');
-    sec.innerHTML = '<h3>🔎 加購推薦</h3>';
-    addon.recommendations.forEach(r=>{
-      const el = document.createElement('div');
-      el.textContent = `${r.name}：分數 ${r.score}`;
-      sec.append(el);
-    });
-    resultContainer.append(sec);
-  } catch(err) {
+    recJson = await resp2.json();
+  } catch (e) {
+    console.error('加購推薦請求失敗', e);
     const errEl = document.createElement('div');
     errEl.style.color = 'red';
-    errEl.textContent = '❌ 加購推薦失敗（CORS 或 500）';
+    errEl.textContent = '❌ 即時加購推薦失敗';
     resultContainer.append(errEl);
-    console.error(err);
+    return;
   }
+
+  // 顯示唯一的「推薦加購商品」
+  const addonSection = document.createElement('div');
+  addonSection.innerHTML = '<h3>🔎 AI 加購推薦</h3>';
+  if (recJson.addon_id) {
+    // 從 products 裡找出名稱
+    const prod = products.find(p => p.id === recJson.addon_id);
+    const name = prod ? prod.name : recJson.addon_id;
+    addonSection.append(document.createTextNode(`✨ 建議加購：${name}`));
+  } else {
+    addonSection.append(document.createTextNode('😕 暫無加購建議'));
+  }
+  resultContainer.append(addonSection);
 }
 
 submitBtn.onclick = async () => {
