@@ -13,26 +13,23 @@ from lightgbm import Booster
 
 app = FastAPI()
 
-# CORS 設定：允許前端存取
+# CORS 設定：允許所有來源並處理 Preflight OPTIONS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*", "https://asloli.github.io"],
+    allow_origins=["*"] ,            # 允許所有來源
     allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],  # 明確包含 OPTIONS
+    allow_headers=["*"],            # 接受所有請求標頭
 )
 
 # 載入商品與折扣規則
-def _load_data():
-    with open("data/raw/products.json", encoding="utf-8") as f:
-        products = json.load(f)
-    with open("data/raw/discounts.json", encoding="utf-8") as f:
-        discounts = json.load(f)
-    return products, discounts
+with open("data/raw/products.json", encoding="utf-8") as f:
+    product_list = json.load(f)
+    product_name_map = {p["id"]: p["name"] for p in product_list}
+    product_dict = {p["id"]: p for p in product_list}
 
-product_list, discount_rules = _load_data()
-product_name_map = {p["id"]: p["name"] for p in product_list}
-product_dict     = {p["id"]: p for p in product_list}
+with open("data/raw/discounts.json", encoding="utf-8") as f:
+    discount_rules = json.load(f)
 
 # 載入加購模型
 model = Booster(model_file="data/training/addon_model.txt")
@@ -71,30 +68,58 @@ async def simulate_addon(request: Request):
     try:
         payload = await request.json()
         items = payload.get("items", [])
-        existing_ids = {i.get("id") for i in items}
-        all_ids = [p["id"] for p in product_list if p["id"] not in existing_ids]
 
-        candidates = []
+        # 拆帳前總價
+        before_orders = solve_cart_split(items, discount_rules)
+        before_price  = sum(o["result"]["final_price"] for o in before_orders)
+
+        # 準備候選
+        existing_ids = {i["id"] for i in items}
+        all_ids      = [p["id"] for p in product_list if p["id"] not in existing_ids]
+
+        scored = []
         for pid in all_ids:
             try:
-                # 使用正確的 extract_features 簽名
-                feature = extract_features({"items": items}, pid)
-                score = model.predict([feature])[0]
-                candidates.append((pid, score))
+                sample  = {"items": items, "addon": product_dict[pid]}
+                feature = extract_features(sample)
+                score   = model.predict([feature])[0]
+                scored.append((pid, score))
             except Exception:
                 continue
 
-        # 排序並取前三
-        candidates.sort(key=lambda x: x[1], reverse=True)
-        top3 = candidates[:3]
-        recommendations = [
-            {"id": pid, "name": product_name_map.get(pid), "score": round(score, 3)}
-            for pid, score in top3
-        ]
-        return {"recommendations": recommendations}
+        # 取前三
+        scored.sort(key=lambda x: x[1], reverse=True)
+        top3 = scored[:3]
+
+        recs = []
+        for pid, score in top3:
+            # 模擬加購後拆帳
+            items_after  = items + [product_dict[pid]]
+            after_orders = solve_cart_split(items_after, discount_rules)
+            after_price  = sum(o["result"]["final_price"] for o in after_orders)
+            saved        = before_price - after_price
+            used_ds      = [
+                d["id"]
+                for o in after_orders
+                for d in o["result"]["used_discounts"]
+            ]
+
+            recs.append({
+                "id": pid,
+                "name": product_name_map[pid],
+                "score": round(score, 3),
+                "after_price": after_price,
+                "saved": saved,
+                "used_discounts": used_ds
+            })
+
+        return JSONResponse(content={"recommendations": recs})
 
     except Exception as e:
-        return JSONResponse(status_code=200, content={"recommendations": [], "error": str(e)})
+        return JSONResponse(status_code=200, content={
+            "recommendations": [],
+            "error": str(e)
+        })
 
 @app.get("/api/products")
 async def get_products():
@@ -120,4 +145,4 @@ async def save_simulation(request: Request):
     return {"status": "OK", "file": filepath}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

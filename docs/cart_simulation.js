@@ -38,15 +38,13 @@ function populateFilters() {
 
 function renderProducts() {
   productList.innerHTML = '';
-  const selCat = catFilter.value, selType = discountFilter.value;
-
-  // 折扣類型相關商品集合
+  const selCat  = catFilter.value,
+        selType = discountFilter.value;
   let discountItems = new Set();
+
   if (selType) {
     discounts.filter(d => d.type === selType).forEach(d => {
-      if (Array.isArray(d.items)) {
-        d.items.forEach(id => discountItems.add(id));
-      }
+      if (Array.isArray(d.items)) d.items.forEach(id => discountItems.add(id));
       if (d.category) {
         products.filter(p => p.category === d.category)
                 .forEach(p => discountItems.add(p.id));
@@ -56,7 +54,7 @@ function renderProducts() {
 
   products
     .filter(p =>
-      (!selCat || p.category === selCat) &&
+      (!selCat  || p.category === selCat)  &&
       (!selType || discountItems.has(p.id))
     )
     .forEach(p => {
@@ -109,7 +107,7 @@ async function updateSimulation() {
   });
   if (!items.length) return;
 
-  // 1. 拆帳 API
+  // 1. 拆帳
   const fd = new FormData();
   fd.append(
     'file',
@@ -119,9 +117,7 @@ async function updateSimulation() {
   let invoices;
   try {
     const resp = await fetch(`${API_BASE}/cart_summary`, {
-      method: 'POST',
-      body: fd,
-      mode: 'cors'
+      method: 'POST', body: fd, mode: 'cors'
     });
     invoices = await resp.json();
   } catch (e) {
@@ -130,30 +126,26 @@ async function updateSimulation() {
     return;
   }
 
-  // 顯示發票
   const header = document.createElement('h3');
   header.textContent = `📄 共產生 ${invoices.length} 張發票`;
   resultContainer.append(header);
 
   invoices.forEach((inv, idx) => {
-    // 商品清單
-    const itemWrap = document.createElement('div');
-    itemWrap.className = 'invoice-items';
-    itemWrap.innerHTML = `<strong>發票 ${idx + 1} 商品：</strong>`;
+    const wrap = document.createElement('div');
+    wrap.className = 'invoice-items';
+    wrap.innerHTML = `<strong>發票 ${idx + 1} 商品：</strong>`;
     inv.items.forEach(i => {
       const el = document.createElement('div');
       el.textContent = `– ${i.name || i.id}  $${i.price}`;
-      itemWrap.append(el);
+      wrap.append(el);
     });
-    resultContainer.append(itemWrap);
+    resultContainer.append(wrap);
 
-    // 小計
     const sub = document.createElement('div');
     sub.className = 'invoice-summary';
     sub.innerHTML = `<strong>小計：$${inv.result.final_price}</strong>`;
     resultContainer.append(sub);
 
-    // 折扣明細
     if (inv.result.used_discounts.length) {
       inv.result.used_discounts.forEach(d => {
         const dl = document.createElement('div');
@@ -161,14 +153,10 @@ async function updateSimulation() {
         dl.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
         resultContainer.append(dl);
       });
-    } else {
-      const none = document.createElement('div');
-      none.textContent = '– 無折扣';
-      resultContainer.append(none);
     }
   });
 
-  // 2. 加購推薦 API (Top 3)
+  // 2. 加購推薦 (Top 3)
   let rec;
   try {
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
@@ -187,7 +175,6 @@ async function updateSimulation() {
     return;
   }
 
-  // 顯示前三名推薦
   const addonSection = document.createElement('div');
   addonSection.innerHTML = '<h3>🔎 AI 加購推薦 (Top 3)</h3>';
   if (rec.recommendations && rec.recommendations.length) {
@@ -202,8 +189,7 @@ async function updateSimulation() {
       if (r.used_discounts && r.used_discounts.length) {
         const sub = document.createElement('div');
         sub.style.marginLeft = '1em';
-        sub.textContent = '折扣：' +
-          r.used_discounts.map(d => `${d.id}(-${d.amount})`).join(', ');
+        sub.textContent = '折扣：' + r.used_discounts.join(', ');
         line.append(sub);
       }
       addonSection.append(line);
