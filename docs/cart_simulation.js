@@ -1,22 +1,28 @@
 // cart_simulation.js
 
+// —— 1. 设置你的后端 API 基础 URL ——
+// 本地调试时：
+const API_BASE = 'http://localhost:8000/api';
+// 如果后端已经部署到线上，就改成：
+// const API_BASE = 'https://your-backend-domain.com/api';
+
 let products = [];
 let discounts = [];
-let cart = {}; // { productId: quantity, ... }
+let cart = {}; // { productId: quantity }
 
 // DOM 參考
-const catFilter = document.getElementById('categoryFilter');
-const discFilter = document.getElementById('discountFilter');
-const productList = document.getElementById('productList');
-const cartItemsEl = document.getElementById('cartItems');
-const cartSummaryEl = document.getElementById('cartSummary');
-const confirmBtn = document.getElementById('confirmBtn');
+const catFilter      = document.getElementById('categoryFilter');
+const discFilter     = document.getElementById('discountFilter');
+const productList    = document.getElementById('productList');
+const cartItemsEl    = document.getElementById('cartItems');
+const cartSummaryEl  = document.getElementById('cartSummary');
+const confirmBtn     = document.getElementById('confirmBtn');
 
-// 啟動：拉 products 與 discounts
+// —— 2. 初始化：抓取產品 & 折扣 —— 
 async function init() {
   [products, discounts] = await Promise.all([
-    fetch('/api/products').then(r=>r.json()),
-    fetch('/api/discounts').then(r=>r.json())
+    fetch(`${API_BASE}/products`).then(r=>r.json()),
+    fetch(`${API_BASE}/discounts`).then(r=>r.json())
   ]);
   populateFilters();
   renderProducts();
@@ -24,40 +30,40 @@ async function init() {
 }
 init();
 
-// 填充 篩選選單
+// 填充篩選選單
 function populateFilters() {
-  const cats = Array.from(new Set(products.map(p=>p.category)));
+  // 類別
+  const cats = [...new Set(products.map(p=>p.category))];
   cats.forEach(c=>{
-    const opt = new Option(c, c);
-    catFilter.append(opt);
+    catFilter.append(new Option(c, c));
   });
-
-  const types = Array.from(new Set(discounts.map(d=>d.type)));
+  // 折扣類型
+  const types = [...new Set(discounts.map(d=>d.type))];
   types.forEach(t=>{
-    const opt = new Option(t, t);
-    discFilter.append(opt);
+    discFilter.append(new Option(t, t));
   });
 
-  catFilter.onchange = renderProducts;
+  catFilter.onchange  = renderProducts;
   discFilter.onchange = renderProducts;
 }
 
 // 根據篩選條件，渲染產品卡片
 function renderProducts() {
   productList.innerHTML = '';
-  const selCat = catFilter.value;
+  const selCat  = catFilter.value;
   const selDisc = discFilter.value;
+
   products
-    .filter(p => !selCat || p.category === selCat)
-    // 若選了折扣類型，僅顯示此類商品：檢查 discount_rules 內是否有此 type 作用於該 p.id
+    .filter(p => !selCat  || p.category === selCat)
     .filter(p => {
       if (!selDisc) return true;
+      // 這裡判斷這筆產品是否有 selDisc 這類折扣
       return discounts.some(d => 
-        d.type===selDisc
+        d.type === selDisc
         && (
-          d.product_id===p.id
-          || (d.items && d.items.includes(p.id))
-          || d.category===p.category
+          d.product_id === p.id ||
+          (d.items && d.items.includes(p.id)) ||
+          d.category === p.category
         )
       );
     })
@@ -79,7 +85,7 @@ function renderProducts() {
 
   // 綁定＋−事件
   document.querySelectorAll('.qty-btn').forEach(btn=>{
-    btn.onclick = e => {
+    btn.onclick = () => {
       const id = btn.dataset.id;
       const op = btn.dataset.op;
       cart[id] = cart[id]||0;
@@ -91,51 +97,60 @@ function renderProducts() {
   });
 }
 
-// 顯示購物車項目
+// 顯示購物車項目 + 呼叫拆帳 API
 function renderCart() {
   cartItemsEl.innerHTML = '';
+  // 組成 items list
   const items = Object.entries(cart).map(([id,qty])=>{
     const p = products.find(x=>x.id===id);
-    const line = document.createElement('div');
-    line.textContent = `🛒 ${p.name} × ${qty} = $${p.price*qty}`;
-    cartItemsEl.append(line);
+    const div = document.createElement('div');
+    div.textContent = `🛒 ${p.name} × ${qty} = $${p.price * qty}`;
+    cartItemsEl.append(div);
     return { id, price: p.price, category: p.category, qty };
   });
 
-  // 計算折扣與總價：呼叫後端拆帳 API
-  fetch('/api/cart_summary', {
+  // 呼叫後端拆帳
+  const fd = new FormData();
+  // FastAPI 這個接口期望一個 file 上傳，因此我們包成 blob
+  fd.append('file',
+    new Blob(
+      [JSON.stringify({ items })],
+      { type: 'application/json' }
+    ),
+    'cart.json'
+  );
+
+  fetch(`${API_BASE}/cart_summary`, {
     method: 'POST',
-    body: new FormData(Object.entries(cart).reduce((f, [id,qty])=>{
-      // FastAPI 接受 UploadFile，所以用 blob 方式
-      f.append('file', new Blob([JSON.stringify({ items: items.map(i=>({ id: i.id, price: i.price, category: i.category })) })], { type: 'application/json' }), 'cart.json');
-      return f;
-    }, new FormData()))
+    body: fd
   })
   .then(r => r.json())
   .then(data => {
-    // data 是 array of invoices
     cartSummaryEl.innerHTML = '';
-    data.forEach((inv,idx) => {
+    data.forEach((inv, idx) => {
       const sub = document.createElement('div');
       sub.innerHTML = `<strong>發票 ${idx+1} 小計：$${inv.result.final_price}</strong>`;
       cartSummaryEl.append(sub);
-      if (inv.result.used_discounts.length) {
-        inv.result.used_discounts.forEach(d => {
-          const dline = document.createElement('div');
-          dline.className = 'discount-summary ' + d.type.replace(/\s+/g,'-');
-          dline.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
-          cartSummaryEl.append(dline);
-        });
-      }
+      inv.result.used_discounts.forEach(d => {
+        const dline = document.createElement('div');
+        dline.className = 'discount-summary ' + d.type.replace(/\s+/g,'-');
+        dline.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
+        cartSummaryEl.append(dline);
+      });
     });
   });
-
 }
 
 // 確認並存檔
 confirmBtn.onclick = () => {
-  const payload = { items: Object.entries(cart).map(([id,qty])=>({ id, price: products.find(p=>p.id===id).price, category: products.find(p=>p.id===id).category, qty })) };
-  fetch('/api/save_simulation', {
+  const payload = {
+    items: Object.entries(cart).map(([id,qty])=>({
+      id, qty,
+      price: products.find(p=>p.id===id).price,
+      category: products.find(p=>p.id===id).category
+    }))
+  };
+  fetch(`${API_BASE}/save_simulation`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
