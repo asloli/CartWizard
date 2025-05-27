@@ -1,5 +1,3 @@
-# backend/main.py
-
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -115,7 +113,7 @@ async def simulate_addon(request: Request):
                 "id": pid,
                 "name": product_name_map[pid],
                 "score": round(score, 3),
-                "addon_price": product_dict[pid]["price"],  # 新增：商品單價
+                "addon_price": product_dict[pid]["price"],
                 "after_price": after_price,
                 "saved": saved,
                 "used_discounts": used_ds

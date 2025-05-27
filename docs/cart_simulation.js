@@ -106,6 +106,7 @@ async function updateSimulation() {
   });
   if (!items.length) return;
 
+  console.log('simulate_addon request items:', items);
   // 拆帳
   const fd = new FormData();
   fd.append('file',
@@ -158,22 +159,28 @@ async function updateSimulation() {
   try {
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify({ items }),
       mode:'cors'
     });
     rec = await resp2.json();
+    console.log('simulate_addon response:', rec);
   } catch (e) {
-    const err = document.createElement('div');
-    err.style.color = 'red';
-    err.textContent = '❌ 加購推薦請求失敗';
-    resultContainer.append(err);
+    console.error('simulate_addon fetch error', e);
+    const errEl = document.createElement('div');
+    errEl.style.color = 'red';
+    errEl.textContent = '❌ 加購推薦請求失敗';
+    resultContainer.append(errEl);
     return;
+  }
+
+  if (rec.error) {
+    console.error('simulate_addon returned error:', rec.error);
   }
 
   const addonSection = document.createElement('div');
   addonSection.innerHTML = '<h3>🔎 AI 加購推薦 (Top 3)</h3>';
-  if (rec.recommendations && rec.recommendations.length) {
+  if (Array.isArray(rec.recommendations) && rec.recommendations.length) {
     rec.recommendations.forEach(r => {
       const line = document.createElement('div');
       line.innerHTML = `
@@ -183,7 +190,7 @@ async function updateSimulation() {
           加購後總價：$${r.after_price}<br>
           省下：$${r.saved}
       `;
-      if (r.used_discounts && r.used_discounts.length) {
+      if (Array.isArray(r.used_discounts) && r.used_discounts.length) {
         const sub = document.createElement('div');
         sub.style.marginLeft = '1em';
         sub.textContent = '折扣：' + r.used_discounts.join(', ');
@@ -192,6 +199,7 @@ async function updateSimulation() {
       addonSection.append(line);
     });
   } else {
+    console.warn('simulate_addon returned no recommendations');
     addonSection.append(document.createTextNode('😕 暫無加購建議'));
   }
   resultContainer.append(addonSection);
