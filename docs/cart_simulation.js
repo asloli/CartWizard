@@ -1,18 +1,14 @@
 // cart_simulation.js
-
 const API_BASE = 'http://localhost:8000/api';
 
-let products = [];
-let discounts = [];
-let cart = {};
+let products = [], discounts = [], cart = {};
 
-// DOM 元素
-const catFilter      = document.getElementById('categoryFilter');
-const discountFilter = document.getElementById('discountFilter');
-const productList    = document.getElementById('productList');
-const cartItemsEl    = document.getElementById('cartItems');
-const resultContainer= document.getElementById('simulationResult');
-const submitBtn      = document.getElementById('submitCart');
+const catFilter       = document.getElementById('categoryFilter');
+const discountFilter  = document.getElementById('discountFilter');
+const productList     = document.getElementById('productList');
+const cartItemsEl     = document.getElementById('cartItems');
+const resultContainer = document.getElementById('simulationResult');
+const submitBtn       = document.getElementById('submitCart');
 
 async function init() {
   [products, discounts] = await Promise.all([
@@ -26,52 +22,42 @@ async function init() {
 init();
 
 function populateFilters() {
-  // 分類
   catFilter.innerHTML = '<option value="">全部</option>';
-  [...new Set(products.map(p => p.category))].forEach(cat =>
-    catFilter.append(new Option(cat, cat))
-  );
+  [...new Set(products.map(p => p.category))]
+    .forEach(c => catFilter.append(new Option(c, c)));
   catFilter.onchange = renderProducts;
 
-  // 折扣類型
   discountFilter.innerHTML = '<option value="">全部</option>';
-  [...new Set(discounts.map(d => d.type))].forEach(type =>
-    discountFilter.append(new Option(type, type))
-  );
+  [...new Set(discounts.map(d => d.type))]
+    .forEach(t => discountFilter.append(new Option(t, t)));
   discountFilter.onchange = renderProducts;
 }
 
 function renderProducts() {
   productList.innerHTML = '';
-  const selCat = catFilter.value;
-  const selType = discountFilter.value;
+  const selCat = catFilter.value, selType = discountFilter.value;
 
-  // 建立「折扣類型對應的商品 ID 集合」
+  // 折扣類型相關商品集合
   let discountItems = new Set();
   if (selType) {
-    discounts
-      .filter(d => d.type === selType)
-      .forEach(d => {
-        // 如果是品項折扣（滿件、組合、獨立）直接取 d.items
-        if (Array.isArray(d.items)) {
-          d.items.forEach(id => discountItems.add(id));
-        }
-        // 如果是分類/滿額折扣，用 d.category 全包
-        if (d.category) {
-          products
-            .filter(p => p.category === d.category)
-            .forEach(p => discountItems.add(p.id));
-        }
-      });
+    discounts.filter(d => d.type === selType).forEach(d => {
+      if (Array.isArray(d.items)) {
+        d.items.forEach(id => discountItems.add(id));
+      }
+      if (d.category) {
+        products.filter(p => p.category===d.category)
+                .forEach(p=>discountItems.add(p.id));
+      }
+    });
   }
 
   products
     .filter(p =>
-      (!selCat || p.category === selCat) &&
+      (!selCat || p.category===selCat) &&
       (!selType || discountItems.has(p.id))
     )
     .forEach(p => {
-      const qty = cart[p.id] || 0;
+      const qty = cart[p.id]||0;
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
@@ -86,7 +72,6 @@ function renderProducts() {
       `;
       productList.append(card);
     });
-
   bindQtyButtons();
 }
 
@@ -94,9 +79,9 @@ function bindQtyButtons() {
   document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.onclick = () => {
       const id = btn.dataset.id, op = btn.dataset.op;
-      cart[id] = (cart[id] || 0) + (op === '+' ? 1 : -1);
-      if (cart[id] < 1) delete cart[id];
-      document.getElementById(`qty-${id}`).textContent = cart[id] || 0;
+      cart[id] = (cart[id]||0) + (op==='+'?1:-1);
+      if (cart[id]<1) delete cart[id];
+      document.getElementById(`qty-${id}`).textContent = cart[id]||0;
       renderCartItems();
     };
   });
@@ -104,10 +89,10 @@ function bindQtyButtons() {
 
 async function renderCartItems() {
   cartItemsEl.innerHTML = '';
-  Object.entries(cart).forEach(([id, qty]) => {
-    const p = products.find(x => x.id === id);
+  Object.entries(cart).forEach(([id,qty]) => {
+    const p = products.find(x=>x.id===id);
     const line = document.createElement('div');
-    line.textContent = `🛒 ${p.name} × ${qty} = $${p.price * qty}`;
+    line.textContent = `🛒 ${p.name} × ${qty} = $${p.price*qty}`;
     cartItemsEl.append(line);
   });
   await updateSimulation();
@@ -115,85 +100,104 @@ async function renderCartItems() {
 
 async function updateSimulation() {
   resultContainer.innerHTML = '';
-  const items = Object.entries(cart).map(([id, qty]) => {
-    const p = products.find(x => x.id === id);
-    return { id, price: p.price, category: p.category };
+  const items = Object.entries(cart).map(([id,qty])=>{
+    const p = products.find(x=>x.id===id);
+    return {id,price:p.price,category:p.category};
   });
-  if (items.length === 0) return;
+  if (!items.length) return;
 
-  // ——— 呼叫 /cart_summary 拆帳 ———
+  // -- 拆帳 API --
   const fd = new FormData();
   fd.append('file',
-    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
+    new Blob([JSON.stringify({items})],{type:'application/json'}),
     'cart.json'
   );
   let invoices;
   try {
-    const resp = await fetch(`${API_BASE}/cart_summary`, { method: 'POST', body: fd });
+    const resp = await fetch(`${API_BASE}/cart_summary`, {
+      method:'POST', body:fd, mode:'cors'
+    });
     invoices = await resp.json();
-  } catch (e) {
-    console.error('拆帳錯誤', e);
+  } catch(e) {
+    resultContainer.textContent = '❌ 拆帳請求失敗';
+    console.error(e);
     return;
   }
 
-  // 顯示發票數
-  const header = document.createElement('h3');
-  header.textContent = `📄 本次共產生 ${invoices.length} 張發票`;
-  resultContainer.append(header);
+  // --- 顯示發票數與明細 ---
+  const h = document.createElement('h3');
+  h.textContent = `📄 共產生 ${invoices.length} 張發票`;
+  resultContainer.append(h);
 
-  // 顯示每張發票明細
-  invoices.forEach((inv, idx) => {
+  invoices.forEach((inv,idx)=>{
+    // 1. 列出該發票的商品
+    const itemWrap = document.createElement('div');
+    itemWrap.className = 'invoice-items';
+    itemWrap.innerHTML = `<strong>發票 ${idx+1} 商品：</strong>`;
+    inv.items.forEach(i=>{
+      const el = document.createElement('div');
+      el.textContent = `– ${i.name||i.id}  $${i.price}`;
+      itemWrap.append(el);
+    });
+    resultContainer.append(itemWrap);
+
+    // 2. 小計 & 折扣
     const sub = document.createElement('div');
     sub.className = 'invoice-summary';
-    sub.innerHTML = `<strong>發票 ${idx + 1} 小計：$${inv.result.final_price}</strong>`;
+    sub.innerHTML = `<strong>小計：$${inv.result.final_price}</strong>`;
     resultContainer.append(sub);
 
-    if (inv.result.used_discounts.length > 0) {
-      inv.result.used_discounts.forEach(d => {
-        const dline = document.createElement('div');
-        dline.className = 'discount-summary';
-        dline.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
-        resultContainer.append(dline);
+    if (inv.result.used_discounts.length) {
+      inv.result.used_discounts.forEach(d=>{
+        const dl = document.createElement('div');
+        dl.className = 'discount-summary';
+        dl.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
+        resultContainer.append(dl);
       });
     } else {
-      const no = document.createElement('div');
-      no.textContent = '此發票未享有任何折扣';
-      resultContainer.append(no);
+      const none = document.createElement('div');
+      none.textContent = '– 無折扣';
+      resultContainer.append(none);
     }
   });
 
-  // ——— 呼叫 /simulate_addon 加購推薦 ———
+  // -- 加購推薦 API --
   try {
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items })
+      method:'POST',
+      mode:'cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items})
     });
-    const addonData = await resp2.json();
+    const addon = await resp2.json();
 
-    const addonSec = document.createElement('div');
-    addonSec.innerHTML = '<h3>🔎 加購推薦</h3>';
-    addonData.recommendations.forEach(r => {
-      const line = document.createElement('div');
-      line.textContent = `${r.name}：加購得分 ${r.score}`;
-      addonSec.append(line);
+    const sec = document.createElement('div');
+    sec.innerHTML = '<h3>🔎 加購推薦</h3>';
+    addon.recommendations.forEach(r=>{
+      const el = document.createElement('div');
+      el.textContent = `${r.name}：分數 ${r.score}`;
+      sec.append(el);
     });
-    resultContainer.append(addonSec);
-  } catch (e) {
-    console.error('加購推薦錯誤', e);
+    resultContainer.append(sec);
+  } catch(err) {
+    const errEl = document.createElement('div');
+    errEl.style.color = 'red';
+    errEl.textContent = '❌ 加購推薦失敗（CORS 或 500）';
+    resultContainer.append(errEl);
+    console.error(err);
   }
 }
 
 submitBtn.onclick = async () => {
-  const items = Object.entries(cart).map(([id, qty]) => {
-    const p = products.find(x => x.id === id);
-    return { id, price: p.price, category: p.category };
+  const items = Object.entries(cart).map(([id,qty])=>{
+    const p = products.find(x=>x.id===id);
+    return {id,price:p.price,category:p.category};
   });
-  const resp = await fetch(`${API_BASE}/save_simulation`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items })
+  const resp = await fetch(`${API_BASE}/save_simulation`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({items})
   });
-  const result = await resp.json();
-  alert(`✅ 已存檔！檔案名稱：${result.file}`);
+  const r = await resp.json();
+  alert(`✅ 已存檔：${r.file}`);
 };
