@@ -1,5 +1,8 @@
 // cart_simulation.js
 
+// 確認檔案載入
+console.log('cart_simulation.js loaded');
+
 const API_BASE       = 'http://localhost:8000/api';
 let products = [], discounts = [], cart = {};
 
@@ -99,6 +102,7 @@ async function renderCartItems() {
 }
 
 async function updateSimulation() {
+  console.log('🛠️ updateSimulation() fired, cart =', cart);
   resultContainer.innerHTML = '';
   const items = Object.entries(cart).map(([id, qty]) => {
     const p = products.find(x => x.id === id);
@@ -106,11 +110,10 @@ async function updateSimulation() {
   });
   if (!items.length) return;
 
-  console.log('simulate_addon request items:', items);
-  // 拆帳
+  // 1. 拆帳
   const fd = new FormData();
   fd.append('file',
-    new Blob([JSON.stringify({ items })], { type:'application/json' }),
+    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
     'cart.json'
   );
   let invoices;
@@ -119,7 +122,7 @@ async function updateSimulation() {
       method:'POST', body:fd, mode:'cors'
     });
     invoices = await resp.json();
-  } catch (e) {
+  } catch {
     resultContainer.textContent = '❌ 拆帳請求失敗';
     return;
   }
@@ -154,9 +157,11 @@ async function updateSimulation() {
     }
   });
 
-  // 加購推薦 Top 3
+  // 2. 加購推薦 Top 3
+  console.log('📤 simulate_addon request items:', items);
   let rec;
   try {
+    console.log('⏳ calling /simulate_addon…');
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
@@ -164,7 +169,7 @@ async function updateSimulation() {
       mode:'cors'
     });
     rec = await resp2.json();
-    console.log('simulate_addon response:', rec);
+    console.log('📥 simulate_addon response:', rec);
   } catch (e) {
     console.error('simulate_addon fetch error', e);
     const errEl = document.createElement('div');
@@ -172,10 +177,6 @@ async function updateSimulation() {
     errEl.textContent = '❌ 加購推薦請求失敗';
     resultContainer.append(errEl);
     return;
-  }
-
-  if (rec.error) {
-    console.error('simulate_addon returned error:', rec.error);
   }
 
   const addonSection = document.createElement('div');
@@ -212,7 +213,7 @@ submitBtn.onclick = async () => {
   });
   const resp = await fetch(`${API_BASE}/save_simulation`, {
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    headers:{ 'Content-Type':'application/json' },
     body: JSON.stringify({ items })
   });
   const r = await resp.json();
