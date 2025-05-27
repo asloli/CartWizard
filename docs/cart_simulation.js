@@ -1,4 +1,5 @@
 // cart_simulation.js
+
 const API_BASE = 'http://localhost:8000/api';
 
 let products = [], discounts = [], cart = {};
@@ -23,13 +24,15 @@ init();
 
 function populateFilters() {
   catFilter.innerHTML = '<option value="">全部</option>';
-  [...new Set(products.map(p => p.category))]
-    .forEach(c => catFilter.append(new Option(c, c)));
+  [...new Set(products.map(p => p.category))].forEach(c =>
+    catFilter.append(new Option(c, c))
+  );
   catFilter.onchange = renderProducts;
 
   discountFilter.innerHTML = '<option value="">全部</option>';
-  [...new Set(discounts.map(d => d.type))]
-    .forEach(t => discountFilter.append(new Option(t, t)));
+  [...new Set(discounts.map(d => d.type))].forEach(t =>
+    discountFilter.append(new Option(t, t))
+  );
   discountFilter.onchange = renderProducts;
 }
 
@@ -45,19 +48,19 @@ function renderProducts() {
         d.items.forEach(id => discountItems.add(id));
       }
       if (d.category) {
-        products.filter(p => p.category===d.category)
-                .forEach(p=>discountItems.add(p.id));
+        products.filter(p => p.category === d.category)
+                .forEach(p => discountItems.add(p.id));
       }
     });
   }
 
   products
     .filter(p =>
-      (!selCat || p.category===selCat) &&
+      (!selCat || p.category === selCat) &&
       (!selType || discountItems.has(p.id))
     )
     .forEach(p => {
-      const qty = cart[p.id]||0;
+      const qty = cart[p.id] || 0;
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
@@ -79,9 +82,9 @@ function bindQtyButtons() {
   document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.onclick = () => {
       const id = btn.dataset.id, op = btn.dataset.op;
-      cart[id] = (cart[id]||0) + (op==='+'?1:-1);
-      if (cart[id]<1) delete cart[id];
-      document.getElementById(`qty-${id}`).textContent = cart[id]||0;
+      cart[id] = (cart[id] || 0) + (op === '+' ? 1 : -1);
+      if (cart[id] < 1) delete cart[id];
+      document.getElementById(`qty-${id}`).textContent = cart[id] || 0;
       renderCartItems();
     };
   });
@@ -89,10 +92,10 @@ function bindQtyButtons() {
 
 async function renderCartItems() {
   cartItemsEl.innerHTML = '';
-  Object.entries(cart).forEach(([id,qty]) => {
-    const p = products.find(x=>x.id===id);
+  Object.entries(cart).forEach(([id, qty]) => {
+    const p = products.find(x => x.id === id);
     const line = document.createElement('div');
-    line.textContent = `🛒 ${p.name} × ${qty} = $${p.price*qty}`;
+    line.textContent = `🛒 ${p.name} × ${qty} = $${p.price * qty}`;
     cartItemsEl.append(line);
   });
   await updateSimulation();
@@ -100,55 +103,59 @@ async function renderCartItems() {
 
 async function updateSimulation() {
   resultContainer.innerHTML = '';
-  const items = Object.entries(cart).map(([id,qty])=>{
-    const p = products.find(x=>x.id===id);
-    return {id,price:p.price,category:p.category};
+  const items = Object.entries(cart).map(([id, qty]) => {
+    const p = products.find(x => x.id === id);
+    return { id, price: p.price, category: p.category };
   });
   if (!items.length) return;
 
-  // -- 拆帳 API --
+  // 1. 拆帳 API
   const fd = new FormData();
-  fd.append('file',
-    new Blob([JSON.stringify({items})],{type:'application/json'}),
+  fd.append(
+    'file',
+    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
     'cart.json'
   );
   let invoices;
   try {
     const resp = await fetch(`${API_BASE}/cart_summary`, {
-      method:'POST', body:fd, mode:'cors'
+      method: 'POST',
+      body: fd,
+      mode: 'cors'
     });
     invoices = await resp.json();
-  } catch(e) {
+  } catch (e) {
     resultContainer.textContent = '❌ 拆帳請求失敗';
     console.error(e);
     return;
   }
 
-  // --- 顯示發票數與明細 ---
-  const h = document.createElement('h3');
-  h.textContent = `📄 共產生 ${invoices.length} 張發票`;
-  resultContainer.append(h);
+  // 顯示發票
+  const header = document.createElement('h3');
+  header.textContent = `📄 共產生 ${invoices.length} 張發票`;
+  resultContainer.append(header);
 
-  invoices.forEach((inv,idx)=>{
-    // 1. 列出該發票的商品
+  invoices.forEach((inv, idx) => {
+    // 商品清單
     const itemWrap = document.createElement('div');
     itemWrap.className = 'invoice-items';
-    itemWrap.innerHTML = `<strong>發票 ${idx+1} 商品：</strong>`;
-    inv.items.forEach(i=>{
+    itemWrap.innerHTML = `<strong>發票 ${idx + 1} 商品：</strong>`;
+    inv.items.forEach(i => {
       const el = document.createElement('div');
-      el.textContent = `– ${i.name||i.id}  $${i.price}`;
+      el.textContent = `– ${i.name || i.id}  $${i.price}`;
       itemWrap.append(el);
     });
     resultContainer.append(itemWrap);
 
-    // 2. 小計 & 折扣
+    // 小計
     const sub = document.createElement('div');
     sub.className = 'invoice-summary';
     sub.innerHTML = `<strong>小計：$${inv.result.final_price}</strong>`;
     resultContainer.append(sub);
 
+    // 折扣明細
     if (inv.result.used_discounts.length) {
-      inv.result.used_discounts.forEach(d=>{
+      inv.result.used_discounts.forEach(d => {
         const dl = document.createElement('div');
         dl.className = 'discount-summary';
         dl.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
@@ -161,39 +168,46 @@ async function updateSimulation() {
     }
   });
 
-  // -- 加購推薦 API --
-    // —— 呼叫 02 頁面同樣的「recommend_addon」——
-  const fd2 = new FormData();
-  fd2.append(
-    'file',
-    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
-    'cart.json'
-  );
-  let recJson;
+  // 2. 加購推薦 API (Top 3)
+  let rec;
   try {
-    const resp2 = await fetch(`${API_BASE}/recommend_addon`, {
+    const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
       method: 'POST',
-      body: fd2,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items }),
       mode: 'cors'
     });
-    recJson = await resp2.json();
+    rec = await resp2.json();
   } catch (e) {
-    console.error('加購推薦請求失敗', e);
+    console.error('simulate_addon 失敗', e);
     const errEl = document.createElement('div');
     errEl.style.color = 'red';
-    errEl.textContent = '❌ 即時加購推薦失敗';
+    errEl.textContent = '❌ 加購推薦請求失敗';
     resultContainer.append(errEl);
     return;
   }
 
-  // 顯示唯一的「推薦加購商品」
+  // 顯示前三名推薦
   const addonSection = document.createElement('div');
-  addonSection.innerHTML = '<h3>🔎 AI 加購推薦</h3>';
-  if (recJson.addon_id) {
-    // 從 products 裡找出名稱
-    const prod = products.find(p => p.id === recJson.addon_id);
-    const name = prod ? prod.name : recJson.addon_id;
-    addonSection.append(document.createTextNode(`✨ 建議加購：${name}`));
+  addonSection.innerHTML = '<h3>🔎 AI 加購推薦 (Top 3)</h3>';
+  if (rec.recommendations && rec.recommendations.length) {
+    rec.recommendations.forEach(r => {
+      const line = document.createElement('div');
+      line.innerHTML = `
+        • <strong>${r.name}</strong><br>
+          Score: ${r.score}<br>
+          加購後總價：$${r.after_price}<br>
+          省下：$${r.saved}
+      `;
+      if (r.used_discounts && r.used_discounts.length) {
+        const sub = document.createElement('div');
+        sub.style.marginLeft = '1em';
+        sub.textContent = '折扣：' +
+          r.used_discounts.map(d => `${d.id}(-${d.amount})`).join(', ');
+        line.append(sub);
+      }
+      addonSection.append(line);
+    });
   } else {
     addonSection.append(document.createTextNode('😕 暫無加購建議'));
   }
@@ -201,14 +215,14 @@ async function updateSimulation() {
 }
 
 submitBtn.onclick = async () => {
-  const items = Object.entries(cart).map(([id,qty])=>{
-    const p = products.find(x=>x.id===id);
-    return {id,price:p.price,category:p.category};
+  const items = Object.entries(cart).map(([id, qty]) => {
+    const p = products.find(x => x.id === id);
+    return { id, price: p.price, category: p.category };
   });
-  const resp = await fetch(`${API_BASE}/save_simulation`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({items})
+  const resp = await fetch(`${API_BASE}/save_simulation`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items })
   });
   const r = await resp.json();
   alert(`✅ 已存檔：${r.file}`);
