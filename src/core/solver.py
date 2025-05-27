@@ -79,7 +79,7 @@ def solve_cart_split(cart_items, discount_rules):
     # 先處理 exclusive 折扣，每個都各自開獨立發票
     for d in exclusive_discounts:
         usable_items = [i for i in cart_items if i['id'] not in used_item_ids]
-
+        
         if d['type'] == '組合折扣':
             target_ids = set(d['items'])
             matched = [i for i in usable_items if i['id'] in target_ids]
@@ -90,7 +90,12 @@ def solve_cart_split(cart_items, discount_rules):
         elif d['type'] == '品牌折扣':
             matched = [i for i in usable_items if i.get('brand') == d['brand']]
         elif d['type'] == '限時折扣':
+            # 限時折扣適用於所有未使用商品
             matched = usable_items
+        elif d['type'] == '獨立折扣':
+            # 獨立折扣只適用於它自己指定的商品
+            target_ids = set(d.get('items', []))
+            matched = [i for i in usable_items if i['id'] in target_ids]
         else:
             matched = []
 

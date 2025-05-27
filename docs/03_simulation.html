@@ -18,10 +18,10 @@
   <h1>🧪 模擬加購推薦</h1>
   <p>請從下方商品中選購，系統會即時顯示適用折扣與總價，最後確認保存模擬結果。</p>
 
-  <!-- 篩選區 -->
+  <!-- 篩選區：分類、折扣類型 -->
   <div class="filters">
     <label>📂 分類：
-      <select id="categoryFilter"></select>
+      <select id="categoryFilter"><!-- JS 會填充這裡 --></select>
     </label>
     <label>🏷️ 折扣類型：
       <select id="discountFilter">
@@ -33,19 +33,21 @@
   <!-- 產品卡片列表 -->
   <div id="productList" class="card-grid"></div>
 
-  <!-- 當前購物車 -->
+  <!-- 當前購物車：JS 會往這裡插入已選商品 -->
   <h2>🛒 您的購物車</h2>
-  <div id="cartItems"></div>
+  <div id="cartItems" class="cart-items"></div>
 
-  <!-- 總價與折扣 -->
-  <div id="cartSummary" class="summary-card"></div>
+  <!-- 拆帳結果：JS 會從這裡開始渲染每張發票 -->
+  <h2>💸 拆帳結果</h2>
+  <div id="simulationResult" class="summary-card"></div>
 
-  <!-- 確認購物並存檔 -->
-  <button id="confirmBtn">✅ 確認購物</button>
+  <!-- 確認並存檔按鈕，JS 會綁定 onclick -->
+  <button id="submitCart">✅ 確認購物並存檔</button>
 
   <!-- 業務 JS -->
   <script src="cart_simulation.js"></script>
   <script src="tab-nav.js"></script>
+
   <!-- 版本標記 -->
   <div class="version-tag">v0.3-alpha</div>
 </body>
