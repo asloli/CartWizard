@@ -3,8 +3,8 @@
 // —— 1. 设置你的后端 API 基础 URL ——
 // 本地调试时：
 const API_BASE = 'http://localhost:8000/api';
-// 如果后端已经部署到线上，就改成：
-// const API_BASE = 'https://your-backend-domain.com/api';
+// 上线后改成你的线上地址即可
+// const API_BASE = 'https://your-domain.com/api';
 
 let products = [];
 let discounts = [];
@@ -12,62 +12,44 @@ let cart = {}; // { productId: quantity }
 
 // DOM 參考
 const catFilter      = document.getElementById('categoryFilter');
-const discFilter     = document.getElementById('discountFilter');
 const productList    = document.getElementById('productList');
-const cartItemsEl    = document.getElementById('cartItems');
-const cartSummaryEl  = document.getElementById('cartSummary');
-const confirmBtn     = document.getElementById('confirmBtn');
+const submitBtn      = document.getElementById('submitCart');
+const resultContainer= document.getElementById('simulationResult');
 
-// —— 2. 初始化：抓取產品 & 折扣 —— 
+// —— 2. 初始化：抓產品 & 折扣 —— 
 async function init() {
   [products, discounts] = await Promise.all([
-    fetch(`${API_BASE}/products`).then(r=>r.json()),
-    fetch(`${API_BASE}/discounts`).then(r=>r.json())
+    fetch(`${API_BASE}/products`).then(r => r.json()),
+    fetch(`${API_BASE}/discounts`).then(r => r.json())
   ]);
-  populateFilters();
+
+  // 填充「分類」下拉
+  catFilter.innerHTML = '<option value="">全部</option>';
+  Array.from(new Set(products.map(p => p.category)))
+       .forEach(cat => {
+         const o = document.createElement('option');
+         o.value = cat; o.textContent = cat;
+         catFilter.append(o);
+       });
+
+  // 監聽分類變動
+  catFilter.addEventListener('change', renderProducts);
+
+  // 第一次渲染
   renderProducts();
-  renderCart();
 }
+
 init();
 
-// 填充篩選選單
-function populateFilters() {
-  // 類別
-  const cats = [...new Set(products.map(p=>p.category))];
-  cats.forEach(c=>{
-    catFilter.append(new Option(c, c));
-  });
-  // 折扣類型
-  const types = [...new Set(discounts.map(d=>d.type))];
-  types.forEach(t=>{
-    discFilter.append(new Option(t, t));
-  });
-
-  catFilter.onchange  = renderProducts;
-  discFilter.onchange = renderProducts;
-}
-
-// 根據篩選條件，渲染產品卡片
+// —— 3. 根據篩選與購物車，渲染產品卡片 —— 
 function renderProducts() {
   productList.innerHTML = '';
-  const selCat  = catFilter.value;
-  const selDisc = discFilter.value;
+  const selCat = catFilter.value;
 
   products
-    .filter(p => !selCat  || p.category === selCat)
-    .filter(p => {
-      if (!selDisc) return true;
-      // 這裡判斷這筆產品是否有 selDisc 這類折扣
-      return discounts.some(d => 
-        d.type === selDisc
-        && (
-          d.product_id === p.id ||
-          (d.items && d.items.includes(p.id)) ||
-          d.category === p.category
-        )
-      );
-    })
+    .filter(p => !selCat || p.category === selCat)
     .forEach(p => {
+      const qty = cart[p.id] || 0;
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
@@ -75,87 +57,61 @@ function renderProducts() {
         <div>類別：${p.category}</div>
         <div>價格：$${p.price}</div>
         <div class="qty-control">
-          <button data-id="${p.id}" data-op="-" class="qty-btn">−</button>
-          <span id="qty-${p.id}">${cart[p.id]||0}</span>
-          <button data-id="${p.id}" data-op="+" class="qty-btn">＋</button>
+          <button class="qty-btn" data-id="${p.id}" data-op="-">−</button>
+          <span id="qty-${p.id}">${qty}</span>
+          <button class="qty-btn" data-id="${p.id}" data-op="+">＋</button>
         </div>
       `;
       productList.append(card);
     });
 
-  // 綁定＋−事件
-  document.querySelectorAll('.qty-btn').forEach(btn=>{
+  // 綁定＋／−按鈕
+  document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.onclick = () => {
-      const id = btn.dataset.id;
-      const op = btn.dataset.op;
-      cart[id] = cart[id]||0;
-      cart[id] += (op==='+'?1:-1);
-      if (cart[id] <= 0) delete cart[id];
-      document.getElementById(`qty-${id}`).textContent = cart[id]||0;
-      renderCart();
+      const id = btn.dataset.id, op = btn.dataset.op;
+      cart[id] = cart[id] || 0;
+      cart[id] += (op === '+' ? 1 : -1);
+      if (cart[id] < 1) delete cart[id];
+      document.getElementById(`qty-${id}`).textContent = cart[id] || 0;
     };
   });
 }
 
-// 顯示購物車項目 + 呼叫拆帳 API
-function renderCart() {
-  cartItemsEl.innerHTML = '';
-  // 組成 items list
-  const items = Object.entries(cart).map(([id,qty])=>{
-    const p = products.find(x=>x.id===id);
-    const div = document.createElement('div');
-    div.textContent = `🛒 ${p.name} × ${qty} = $${p.price * qty}`;
-    cartItemsEl.append(div);
-    return { id, price: p.price, category: p.category, qty };
+// —— 4. 點「提交」呼叫拆帳 API，並把結果印到畫面 —— 
+submitBtn.addEventListener('click', async () => {
+  resultContainer.innerHTML = '';
+
+  // 組出要傳給後端的 items list（不傳 qty，因為拆帳算法只看 price）
+  const items = Object.entries(cart).map(([id, qty]) => {
+    const p = products.find(x => x.id === id);
+    return { id, price: p.price, category: p.category };
   });
 
-  // 呼叫後端拆帳
+  // 用 FormData 包成 file 上傳給 FastAPI
   const fd = new FormData();
-  // FastAPI 這個接口期望一個 file 上傳，因此我們包成 blob
   fd.append('file',
-    new Blob(
-      [JSON.stringify({ items })],
-      { type: 'application/json' }
-    ),
+    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
     'cart.json'
   );
 
-  fetch(`${API_BASE}/cart_summary`, {
+  // 呼叫 /api/cart_summary
+  const resp = await fetch(`${API_BASE}/cart_summary`, {
     method: 'POST',
     body: fd
-  })
-  .then(r => r.json())
-  .then(data => {
-    cartSummaryEl.innerHTML = '';
-    data.forEach((inv, idx) => {
-      const sub = document.createElement('div');
-      sub.innerHTML = `<strong>發票 ${idx+1} 小計：$${inv.result.final_price}</strong>`;
-      cartSummaryEl.append(sub);
-      inv.result.used_discounts.forEach(d => {
-        const dline = document.createElement('div');
-        dline.className = 'discount-summary ' + d.type.replace(/\s+/g,'-');
-        dline.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
-        cartSummaryEl.append(dline);
-      });
+  });
+  const invoices = await resp.json();
+
+  // 渲染每張發票結果
+  invoices.forEach((inv, idx) => {
+    const sub = document.createElement('div');
+    sub.innerHTML = `<strong>發票 ${idx+1} 小計：$${inv.result.final_price}</strong>`;
+    resultContainer.append(sub);
+
+    inv.result.used_discounts.forEach(d => {
+      const ddiv = document.createElement('div');
+      ddiv.className = 'discount-summary';
+      ddiv.textContent = `[${d.id}] ${d.type}: -$${d.amount} (${d.description})`;
+      resultContainer.append(ddiv);
     });
   });
-}
-
-// 確認並存檔
-confirmBtn.onclick = () => {
-  const payload = {
-    items: Object.entries(cart).map(([id,qty])=>({
-      id, qty,
-      price: products.find(p=>p.id===id).price,
-      category: products.find(p=>p.id===id).category
-    }))
-  };
-  fetch(`${API_BASE}/save_simulation`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(r => r.json())
-  .then(res => alert(`已儲存到：${res.file}`))
-  .catch(() => alert('存檔失敗'));
-};
+});
