@@ -2,15 +2,19 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <nav>
-    <a href="index.html">📑 拆帳明細</a>
-    <a href="02_addon.html">🛍️ 加購推薦</a>
-    <a href="03_simulation.html">🧪 模擬加購</a>
-  </nav>
-  <title>🧪 模擬加購推薦 - CartWizard</title>
+  <title>🧪 CartWizard 模擬加購推薦</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 選項卡式導航 -->
+  <nav class="tab-nav">
+    <ul>
+      <li><a href="index.html">📑 拆帳明細</a></li>
+      <li><a href="02_addon.html">🛍️ 加購推薦</a></li>
+      <li><a href="03_simulation.html">🧪 模擬加購</a></li>
+    </ul>
+  </nav>
+
   <h1>🧪 模擬加購推薦</h1>
   <p>請從下方商品中自由選購，系統將模擬推薦最佳加購項目</p>
 
@@ -25,6 +29,12 @@
 
   <div id="simulationResult"></div>
 
+  <!-- 業務邏輯腳本 -->
   <script src="cart_simulation.js"></script>
+  <!-- 高亮當前分頁 -->
+  <script src="tab-nav.js"></script>
+
+  <!-- 版本標記 -->
+  <div class="version-tag">v0.3-alpha</div>
 </body>
 </html>

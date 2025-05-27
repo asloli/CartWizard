@@ -142,3 +142,30 @@ input[type="file"] {
   margin: 4px 0;
   font-size: 1em;
 }
+
+/* ── 选项卡导航样式 ───────────────────────── */
+.tab-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  border-bottom: 2px solid #ddd;
+}
+.tab-nav li {
+  margin-right: 24px;
+}
+.tab-nav a {
+  text-decoration: none;
+  padding: 8px 0;
+  color: #555;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.tab-nav a:hover {
+  color: #000;
+}
+.tab-nav a.active {
+  color: #000;
+  border-color: #000;
+}
