@@ -169,3 +169,36 @@ input[type="file"] {
   color: #000;
   border-color: #000;
 }
+
+/* 產品卡片 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 16px;
+}
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+}
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* 購物車 & 摘要 */
+#cartItems div {
+  margin: 4px 0;
+}
+.discount-summary {
+  margin-left: 12px;
+  font-size: 0.9em;
+  color: #c60000;
+}

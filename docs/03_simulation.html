@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>🧪 CartWizard 模擬加購推薦</title>
+  <title>🧪 CartWizard 模擬加購</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,24 +16,36 @@
   </nav>
 
   <h1>🧪 模擬加購推薦</h1>
-  <p>請從下方商品中自由選購，系統將模擬推薦最佳加購項目</p>
+  <p>請從下方商品中選購，系統會即時顯示適用折扣與總價，最後確認保存模擬結果。</p>
 
-  <div>
-    <label for="categoryFilter">📂 分類篩選：</label>
-    <select id="categoryFilter"></select>
+  <!-- 篩選區 -->
+  <div class="filters">
+    <label>📂 分類：
+      <select id="categoryFilter"></select>
+    </label>
+    <label>🏷️ 折扣類型：
+      <select id="discountFilter">
+        <option value="">全部</option>
+      </select>
+    </label>
   </div>
 
-  <div id="productList"></div>
+  <!-- 產品卡片列表 -->
+  <div id="productList" class="card-grid"></div>
 
-  <button id="submitCart">📤 提交購物車並推薦加購</button>
+  <!-- 當前購物車 -->
+  <h2>🛒 您的購物車</h2>
+  <div id="cartItems"></div>
 
-  <div id="simulationResult"></div>
+  <!-- 總價與折扣 -->
+  <div id="cartSummary" class="summary-card"></div>
 
-  <!-- 業務邏輯腳本 -->
+  <!-- 確認購物並存檔 -->
+  <button id="confirmBtn">✅ 確認購物</button>
+
+  <!-- 業務 JS -->
   <script src="cart_simulation.js"></script>
-  <!-- 高亮當前分頁 -->
   <script src="tab-nav.js"></script>
-
   <!-- 版本標記 -->
   <div class="version-tag">v0.3-alpha</div>
 </body>
