@@ -1,7 +1,6 @@
 // cart_simulation.js
 
-const API_BASE = 'http://localhost:8000/api';
-
+const API_BASE       = 'http://localhost:8000/api';
 let products = [], discounts = [], cart = {};
 
 const catFilter       = document.getElementById('categoryFilter');
@@ -107,22 +106,20 @@ async function updateSimulation() {
   });
   if (!items.length) return;
 
-  // 1. 拆帳
+  // 拆帳
   const fd = new FormData();
-  fd.append(
-    'file',
-    new Blob([JSON.stringify({ items })], { type: 'application/json' }),
+  fd.append('file',
+    new Blob([JSON.stringify({ items })], { type:'application/json' }),
     'cart.json'
   );
   let invoices;
   try {
     const resp = await fetch(`${API_BASE}/cart_summary`, {
-      method: 'POST', body: fd, mode: 'cors'
+      method:'POST', body:fd, mode:'cors'
     });
     invoices = await resp.json();
   } catch (e) {
     resultContainer.textContent = '❌ 拆帳請求失敗';
-    console.error(e);
     return;
   }
 
@@ -133,7 +130,7 @@ async function updateSimulation() {
   invoices.forEach((inv, idx) => {
     const wrap = document.createElement('div');
     wrap.className = 'invoice-items';
-    wrap.innerHTML = `<strong>發票 ${idx + 1} 商品：</strong>`;
+    wrap.innerHTML = `<strong>發票 ${idx+1} 商品：</strong>`;
     inv.items.forEach(i => {
       const el = document.createElement('div');
       el.textContent = `– ${i.name || i.id}  $${i.price}`;
@@ -156,22 +153,21 @@ async function updateSimulation() {
     }
   });
 
-  // 2. 加購推薦 (Top 3)
+  // 加購推薦 Top 3
   let rec;
   try {
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ items }),
-      mode: 'cors'
+      mode:'cors'
     });
     rec = await resp2.json();
   } catch (e) {
-    console.error('simulate_addon 失敗', e);
-    const errEl = document.createElement('div');
-    errEl.style.color = 'red';
-    errEl.textContent = '❌ 加購推薦請求失敗';
-    resultContainer.append(errEl);
+    const err = document.createElement('div');
+    err.style.color = 'red';
+    err.textContent = '❌ 加購推薦請求失敗';
+    resultContainer.append(err);
     return;
   }
 
@@ -182,6 +178,7 @@ async function updateSimulation() {
       const line = document.createElement('div');
       line.innerHTML = `
         • <strong>${r.name}</strong><br>
+          單價：$${r.addon_price}<br>
           Score: ${r.score}<br>
           加購後總價：$${r.after_price}<br>
           省下：$${r.saved}
@@ -206,8 +203,8 @@ submitBtn.onclick = async () => {
     return { id, price: p.price, category: p.category };
   });
   const resp = await fetch(`${API_BASE}/save_simulation`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ items })
   });
   const r = await resp.json();

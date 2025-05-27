@@ -1,3 +1,5 @@
+# backend/main.py
+
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -13,13 +15,13 @@ from lightgbm import Booster
 
 app = FastAPI()
 
-# CORS 設定：允許所有來源並處理 Preflight OPTIONS
+# CORS：允許所有來源並處理 OPTIONS 預檢
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] ,            # 允許所有來源
+    allow_origins=["*", "https://asloli.github.io"],
     allow_credentials=False,
-    allow_methods=["GET", "POST", "OPTIONS"],  # 明確包含 OPTIONS
-    allow_headers=["*"],            # 接受所有請求標頭
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 # 載入商品與折扣規則
@@ -34,6 +36,7 @@ with open("data/raw/discounts.json", encoding="utf-8") as f:
 # 載入加購模型
 model = Booster(model_file="data/training/addon_model.txt")
 
+
 @app.post("/api/cart_summary")
 async def cart_summary(file: UploadFile = File(...)):
     content = await file.read()
@@ -43,6 +46,7 @@ async def cart_summary(file: UploadFile = File(...)):
         for item in part.get("items", []):
             item["name"] = product_name_map.get(item["id"], item["id"])
     return result
+
 
 @app.post("/api/recommend_addon")
 async def recommend_addon_api(file: UploadFile = File(...)):
@@ -54,7 +58,7 @@ async def recommend_addon_api(file: UploadFile = File(...)):
     for part in before:
         for item in part.get("items", []):
             item["name"] = product_name_map.get(item["id"], item["id"])
-    items_after = list(items)
+    items_after = items.copy()
     if addon_id:
         items_after.append(product_dict[addon_id])
     after = solve_cart_split(items_after, discount_rules)
@@ -63,20 +67,22 @@ async def recommend_addon_api(file: UploadFile = File(...)):
             item["name"] = product_name_map.get(item["id"], item["id"])
     return {"addon_id": addon_id, "before": before, "after": after}
 
+
 @app.post("/api/simulate_addon")
 async def simulate_addon(request: Request):
     try:
-        payload = await request.json()
-        items = payload.get("items", [])
+        payload       = await request.json()
+        items         = payload.get("items", [])
 
         # 拆帳前總價
         before_orders = solve_cart_split(items, discount_rules)
         before_price  = sum(o["result"]["final_price"] for o in before_orders)
 
-        # 準備候選
+        # 準備候選商品ID
         existing_ids = {i["id"] for i in items}
         all_ids      = [p["id"] for p in product_list if p["id"] not in existing_ids]
 
+        # 計算分數
         scored = []
         for pid in all_ids:
             try:
@@ -87,7 +93,7 @@ async def simulate_addon(request: Request):
             except Exception:
                 continue
 
-        # 取前三
+        # 取前三名
         scored.sort(key=lambda x: x[1], reverse=True)
         top3 = scored[:3]
 
@@ -98,6 +104,7 @@ async def simulate_addon(request: Request):
             after_orders = solve_cart_split(items_after, discount_rules)
             after_price  = sum(o["result"]["final_price"] for o in after_orders)
             saved        = before_price - after_price
+            # 收集使用到的折扣 ID
             used_ds      = [
                 d["id"]
                 for o in after_orders
@@ -108,6 +115,7 @@ async def simulate_addon(request: Request):
                 "id": pid,
                 "name": product_name_map[pid],
                 "score": round(score, 3),
+                "addon_price": product_dict[pid]["price"],  # 新增：商品單價
                 "after_price": after_price,
                 "saved": saved,
                 "used_discounts": used_ds
@@ -121,13 +129,16 @@ async def simulate_addon(request: Request):
             "error": str(e)
         })
 
+
 @app.get("/api/products")
 async def get_products():
     return product_list
 
+
 @app.get("/api/discounts")
 async def get_discounts():
     return discount_rules
+
 
 @app.post("/api/save_simulation")
 async def save_simulation(request: Request):
@@ -143,6 +154,7 @@ async def save_simulation(request: Request):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump({"items": items, "summary": summary}, f, ensure_ascii=False, indent=2)
     return {"status": "OK", "file": filepath}
+
 
 if __name__ == "__main__":
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
