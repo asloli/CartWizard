@@ -1,129 +1,123 @@
-# 🧙‍♂️ CartWizard
 
-智慧購物車折扣拆帳與加購推薦系統，支援前後端分離架構：
-- 前端（純 HTML/JS/CSS）：可部署在 GitHub Pages
-- 後端（FastAPI）：需在本地啟動，處理折扣演算與推薦邏輯
+# 🛒 CartWizard
 
----
-
-## 🧠 功能簡介
-- 自動計算最省錢的折扣拆帳組合
-- 模擬加購行為，推薦「加一件更划算」商品
-- 可生成訓練資料供 AI 模型學習推薦
-- 適合作為演算法優化與推薦系統展示專案
-- 🔮 AI 模型推薦最划算的「加購商品」（支援 `None` 回傳）
-- ✅ 訓練樣本強化與推薦準確率追蹤
-- 🧾 發票視覺化呈現、Shopee 風格卡片 UI
-- 📊 折扣金額條狀圖，直觀比較加購前後省多少
-- 🛍️ 模擬加購推薦後的消費者行為話術
+CartWizard 是一套智慧購物車系統，結合即時折扣拆帳和 AI 加購推薦功能，幫助消費者在購物時獲得最划算的折扣組合。
 
 ---
 
-## 🚀 使用方式
-1. 生成商品庫與折扣規則（`src/simulate/`）
-2. 建立模擬購物車（`src/simulate/cart_gen.py`）
-3. 使用演算法拆帳（`src/core/solver.py`）
-4. 模擬推薦加購（`src/core/addon_recommender.py`）
-5. 匯出訓練資料 → AI 模型訓練（`src/ai/`）
-6. 訓練推薦模型：`src/ai/train_addon_model.py`
-7. 推論推薦加購：`src/ai/predict_addon.py`，預測推薦商品 ID
+## 📦 目錄結構
 
-## 🚀 快速開始
+```
+CartWizard/
+├── backend/                # FastAPI 後端服務
+│   ├── main.py             # API 路由與核心處理
+│   └── src/                # 核心演算法與 AI 模型
+│       ├── core/solver.py
+│       ├── ai/predict_addon.py
+│       └── ai/train_addon_model.py
+├── data/                   # 測試資料與模型
+│   ├── raw/                # 原始商品與折扣規則
+│   ├── training/           # AI 訓練檔與模型
+│   ├── carts/              # 模擬產生的購物車資料
+│   └── user_simulated/     # 使用者模擬結果
+├── frontend/               # 前端頁面
+│   ├── index.html
+│   ├── 02_addon.html
+│   ├── 03_simulation.html
+│   ├── style.css
+│   └── cart_simulation.js
+└── README.md
+```
 
-### ✅ 第一步：安裝依賴
+---
+
+## 🚀 功能總覽
+
+✅ **商品與折扣規則即時載入**  
+✅ **商品分類與折扣篩選**  
+✅ **最划算折扣組合拆帳**  
+✅ **AI 加購推薦（Top 3）**  
+✅ **推薦結果以卡片式 UI 呈現**  
+✅ **模擬結果保存至檔案**
+
+---
+
+## 🧪 模擬加購推薦
+
+在 `03_simulation.html` 頁面中，使用者可以：
+1. 選擇想購買的商品，系統會自動即時拆帳並計算折扣。
+2. 前端會自動呼叫後端 `/simulate_addon` API，取得 AI 加購推薦結果。
+3. 預覽 **Top 3 加購選項**，包含：
+   - 單價與推薦分數
+   - 加購後總價與節省金額
+   - 使用到的折扣 ID
+
+推薦結果已優化為卡片式樣式，使用者更易閱讀。
+
+---
+
+## 🌐 API 文件
+
+### `/api/products`  
+取得商品清單（JSON 格式）。
+
+### `/api/discounts`  
+取得折扣規則清單（JSON 格式）。
+
+### `/api/cart_summary`  
+**方法**：POST  
+**上傳**：購物車（`FormData` 格式，`file` 欄位放 `cart.json`）  
+**回傳**：折扣拆帳結果，含多張發票與每張發票的折扣明細。
+
+### `/api/simulate_addon`  
+**方法**：POST  
+**傳入**：`{ "items": [...] }`（JSON 格式）  
+**回傳**：`recommendations`（Top 3 加購推薦結果），包含加購後價格、節省金額、使用到的折扣等。
+
+### `/api/save_simulation`  
+**方法**：POST  
+**傳入**：`{ "items": [...] }`（JSON 格式）  
+**回傳**：`{"file": "data/user_simulated/sim_*.json"}`（已儲存檔案路徑）。
+
+---
+
+## ⚙️ 執行方式
+
+### 1️⃣ 安裝依賴
 ```bash
 pip install -r requirements.txt
 ```
 
-### ▶️ 第二步：啟動 FastAPI 本地伺服器
+### 2️⃣ 啟動後端 API
 ```bash
-cd backend
-uvicorn main:app --reload
+uvicorn backend.main:app --reload
 ```
 
-### 🌐 第三步：開啟前端頁面（可放 GitHub Pages）
-將 `frontend/` 目錄推上 GitHub 分支 `gh-pages`，網址為：
-```
-https://你的帳號.github.io/CartWizard/index.html
-```
+### 3️⃣ 瀏覽前端
+直接開啟 `https://asloli.github.io/CartWizard/index.html`，即可測試即時加購模擬與折扣推薦。
 
 ---
 
-## 📁 專案資料夾結構
-
-<details>
-<summary>點我展開</summary>
-
-<br>
-
-```text
-CartWizard/
-├── frontend/                 # 🔸 部署於 GitHub Pages 的畫面
-│   ├── index.html            # 拆帳頁（第 1 頁）
-│   ├── cart_summary.js       # 對應 API 的邏輯（第 1 頁）
-│   ├── style.css             # 共用樣式
-│   └── ...                   # 後續將加入 02、03 頁
-│
-├── backend/                  # 🔹 本地執行的 FastAPI 後端
-│   └── main.py               # 提供 /api/cart_summary 等端點
-│
-├── data/                     # 原始資料與訓練資料
-│   ├── raw/products.json     # 商品資料庫
-│   ├── raw/discounts.json    # 折扣規則
-│   └── carts/                # 測試用購物車 JSON
-│
-├── src/                      # 核心邏輯與模型
-│   └── core/solver.py        # 拆帳演算法
-│
-├── requirements.txt          # Python 相依套件
-└── README.md                 # 本說明文件
-```
-
-</details>
+## 🔧 AI 模型訓練流程
+1. 使用 `data/carts/` 中的真實或模擬購物車資料，生成訓練資料集（包含「加購前」與「加購後」的折扣拆帳結果）。
+2. `train_addon_model.py` 會呼叫 `extract_features`，自動抽取購物車特徵（如商品種類分布、平均價格等）。
+3. 使用 LightGBM 訓練分類模型，產出最適合加購推薦的模型 `addon_model.txt。`
+4. 訓練後的模型可直接被 `/simulate_addon` API 使用，實現即時加購推薦。
 
 ---
 
-## 🛠 TODO
+## 💡 延伸想法
 
-- [x] 建立 Shopee 風格的 Streamlit UI
-- [x] 折扣總額視覺化圖表（matplotlib）
-- [ ] 匯出成推薦服務 API
-- [ ] 支援使用者行為回饋強化 AI 模型
-- [ ] 多版本折扣規則解析模組化
-- [ ] 預測折扣總金額（回歸任務）
-- [ ] 預測使用折扣組合（多標籤分類任務）
-- [ ] 加購推薦模型（分類任務）
-- [ ] 模型訓練可視化（誤差分佈、預測比較圖）
-
-
-- [x] 拆帳系統與推薦演算法模組化
-- [x] Streamlit 多分頁整合 + 模擬推薦
-- [x] 顯示推薦信心值 + Top-3 商品
-- [x] 支援推薦結果儲存成訓練資料
-- [ ] 推薦熱度統計視覺化（bar chart）
-- [ ] 使用者接受率追蹤與模型回訓
-- [ ] 模型效能報告與混淆矩陣圖表
+- 💻 **UI 美化**：前端已使用卡片式樣式，後續可再美化 hover/動畫效果。
+- 🤖 **AI 模型優化**：目前使用 LightGBM，可替換更強的模型或持續擴充訓練資料。未來可從 03_simulation.html 產出的真實模擬加購資料中，萃取使用者偏好與實際的「加購意願」資料，強化 AI 推薦權重，讓 AI 更精準地推薦出能真正讓使用者願意多選購的加購商品。
+- 🌍 **部署**：可使用 Docker / GitHub Pages 部署，快速體驗前後端整合。
 
 ---
 
-## 🔧 API 說明
-
-### `/api/cart_summary`
-- **方法**：POST
-- **參數**：上傳購物車 JSON 檔案
-- **回傳**：每張發票對應的商品、折扣、總價（含商品名稱對照）
+## 📝 版本記錄
+- `v0.3-alpha`：加入 AI 加購推薦、卡片式結果呈現、bug fix。
 
 ---
-
-## 📌 注意事項
-- 前端部署後，功能需依賴你本地開啟的 Python API 才能正常執行
-- 可在未來將 API 移至雲端平台（如 Railway、Render）以供公開使用
-
----
-
-## 📜 版本記錄
-- v0.1 初版功能完成：前後端分離架構、拆帳明細頁面完成
-
 
 ## 📜 License
 
