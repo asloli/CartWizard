@@ -31,7 +31,7 @@ document.getElementById('addonFile').addEventListener('change', async (e) => {
   header.textContent = `🔔 建議加購商品：${addon_id}`;
   rec.appendChild(header);
 
-  // 共用渲染函式
+  //共用渲染函式
   function renderInvoices(invoices, container, title) {
     const t = document.createElement('h4');
     t.textContent = title;

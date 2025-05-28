@@ -1,6 +1,6 @@
 // cart_summary.js
 
-// helper：把 type 转成合法 class 名
+//helper：把 type 转成合法 class 名
 function slugify(str) {
   return str
     .replace(/[^\w\u4e00-\u9fa5]/g, '')

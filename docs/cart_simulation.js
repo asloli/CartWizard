@@ -110,7 +110,7 @@ async function updateSimulation() {
   });
   if (!items.length) return;
 
-  // 1. 拆帳
+  // 1.拆帳
   const fd = new FormData();
   fd.append('file',
     new Blob([JSON.stringify({ items })], { type: 'application/json' }),
