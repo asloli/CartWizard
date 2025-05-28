@@ -169,7 +169,16 @@ async function updateSimulation() {
       mode:'cors'
     });
     rec = await resp2.json();
-    console.log('📥 simulate_addon response:', rec);
+    // 查格式
+    console.log('🟦 simulate_addon response:', rec);
+    if (rec.error) {
+      console.error('❌ 後端錯誤：', rec.error);
+    } else if (!rec.recommendations || !rec.recommendations.length) {
+      console.warn('⚠️ 沒有任何加購推薦結果！');
+    } else {
+      console.log('✅ 推薦結果正常', rec.recommendations);
+    }
+    //
   } catch (e) {
     console.error('simulate_addon fetch error', e);
     const errEl = document.createElement('div');
