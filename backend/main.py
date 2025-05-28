@@ -1,6 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+import pandas as pd
+
 import json
 import uvicorn
 import datetime
@@ -86,10 +88,20 @@ async def simulate_addon(request: Request):
             try:
                 sample  = {"items": items, "addon": product_dict[pid]}
                 feature = extract_features(sample)
-                score   = model.predict([feature])[0]
-                scored.append((pid, score))
-            except Exception:
+
+                input_df = pd.DataFrame([feature])
+                score    = model.predict(input_df)[0]
+
+                # ✨ 因為 score 是 array，取最大值或合適的機率值
+                max_score = float(score.max())  # 或者 np.max(score)
+                scored.append((pid, max_score))
+            except Exception as e:
+                print(f"❌ error for {pid}: {e}")
                 continue
+
+
+        print("✅ all_ids 候選數量:", len(all_ids))
+        print("✅ scored:", scored)
 
         # 取前三名
         scored.sort(key=lambda x: x[1], reverse=True)

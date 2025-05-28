@@ -193,16 +193,17 @@ async function updateSimulation() {
   if (Array.isArray(rec.recommendations) && rec.recommendations.length) {
     rec.recommendations.forEach(r => {
       const line = document.createElement('div');
+      line.className = 'addon-card'; // ✨ 加上卡片樣式
       line.innerHTML = `
-        • <strong>${r.name}</strong><br>
-          單價：$${r.addon_price}<br>
-          Score: ${r.score}<br>
-          加購後總價：$${r.after_price}<br>
-          省下：$${r.saved}
+        <strong>${r.name}</strong><br>
+        單價：$${r.addon_price}<br>
+        Score: ${r.score}<br>
+        加購後總價：$${r.after_price}<br>
+        省下：$${r.saved}
       `;
       if (Array.isArray(r.used_discounts) && r.used_discounts.length) {
         const sub = document.createElement('div');
-        sub.style.marginLeft = '1em';
+        sub.className = 'addon-sub'; // ✨ 加小字樣式
         sub.textContent = '折扣：' + r.used_discounts.join(', ');
         line.append(sub);
       }
