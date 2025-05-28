@@ -1,7 +1,7 @@
 // cart_simulation.js
 
 // 確認檔案載入
-console.log('cart_simulation.js loaded');
+//console.log('cart_simulation.js loaded');
 
 const API_BASE       = 'http://localhost:8000/api';
 let products = [], discounts = [], cart = {};
@@ -102,7 +102,7 @@ async function renderCartItems() {
 }
 
 async function updateSimulation() {
-  console.log('🛠️ updateSimulation() fired, cart =', cart);
+  //console.log('🛠️ updateSimulation() fired, cart =', cart);
   resultContainer.innerHTML = '';
   const items = Object.entries(cart).map(([id, qty]) => {
     const p = products.find(x => x.id === id);
@@ -158,10 +158,10 @@ async function updateSimulation() {
   });
 
   // 2. 加購推薦 Top 3
-  console.log('📤 simulate_addon request items:', items);
+  //console.log('📤 simulate_addon request items:', items);
   let rec;
   try {
-    console.log('⏳ calling /simulate_addon…');
+    // console.log('⏳ calling /simulate_addon…');
     const resp2 = await fetch(`${API_BASE}/simulate_addon`, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
