@@ -169,7 +169,7 @@ async function updateSimulation() {
       mode:'cors'
     });
     rec = await resp2.json();
-    // 查格式
+    /* 查格式
     console.log('🟦 simulate_addon response:', rec);
     if (rec.error) {
       console.error('❌ 後端錯誤：', rec.error);
@@ -178,7 +178,7 @@ async function updateSimulation() {
     } else {
       console.log('✅ 推薦結果正常', rec.recommendations);
     }
-    //
+    */
   } catch (e) {
     console.error('simulate_addon fetch error', e);
     const errEl = document.createElement('div');

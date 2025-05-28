@@ -99,10 +99,11 @@ async def simulate_addon(request: Request):
                 print(f"❌ error for {pid}: {e}")
                 continue
 
-
+        '''
         print("✅ all_ids 候選數量:", len(all_ids))
         print("✅ scored:", scored)
-
+        '''
+        
         # 取前三名
         scored.sort(key=lambda x: x[1], reverse=True)
         top3 = scored[:3]
