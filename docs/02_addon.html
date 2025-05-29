@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>🛍️ CartWizard 加購推薦</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 選項卡式導航 -->
+  <nav class="tab-nav">
+    <ul>
+      <li><a href="index.html">📑 拆帳明細</a></li>
+      <li><a href="02_addon.html">🛍️ 加購推薦</a></li>
+      <li><a href="03_simulation.html">🧪 模擬加購</a></li>
+    </ul>
+  </nav>
+
+  <h1>🛍️ 加購推薦</h1>
+  <p>上傳購物車 JSON，AI 會推薦一筆加購商品，並將加購前後的發票拆帳結果展示。</p>
+
+  <input type="file" id="addonFile" accept=".json">
+  <div id="originalResult"></div>
+  <div id="recommendResult"></div>
+
+  <!-- 業務邏輯腳本 -->
+  <script src="addon_recommend.js"></script>
+  <!-- 高亮當前分頁 -->
+  <script src="tab-nav.js"></script>
+
+  <!-- 版本標記 -->
+  <div class="version-tag">v0.3-alpha</div>
+</body>
+</html>

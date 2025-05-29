@@ -1,0 +1,368 @@
+{
+  "items": [
+    {
+      "id": "C001",
+      "price": 2514,
+      "category": "衣服",
+      "name": "極簡白色 T 恤"
+    },
+    {
+      "id": "C002",
+      "price": 2036,
+      "category": "衣服",
+      "name": "復古牛仔外套"
+    }
+  ],
+  "summary": [
+    {
+      "items": [
+        {
+          "id": "C001",
+          "price": 2514,
+          "category": "衣服",
+          "name": "極簡白色 T 恤"
+        },
+        {
+          "id": "C002",
+          "price": 2036,
+          "category": "衣服",
+          "name": "復古牛仔外套"
+        }
+      ],
+      "discounts": [
+        {
+          "id": "D001",
+          "type": "滿額折扣",
+          "threshold": 3302,
+          "amount": 483,
+          "category": "衣服",
+          "description": "衣服類商品滿 $3302 折 $483"
+        },
+        {
+          "id": "D002",
+          "type": "滿額折扣",
+          "threshold": 3658,
+          "amount": 375,
+          "category": "衣服",
+          "description": "衣服類商品滿 $3658 折 $375"
+        },
+        {
+          "id": "D003",
+          "type": "滿額折扣",
+          "threshold": 2832,
+          "amount": 217,
+          "category": "衣服",
+          "description": "衣服類商品滿 $2832 折 $217"
+        },
+        {
+          "id": "D004",
+          "type": "滿額折扣",
+          "threshold": 2861,
+          "amount": 293,
+          "category": "3C",
+          "description": "3C類商品滿 $2861 折 $293"
+        },
+        {
+          "id": "D005",
+          "type": "滿額折扣",
+          "threshold": 1722,
+          "amount": 467,
+          "category": "3C",
+          "description": "3C類商品滿 $1722 折 $467"
+        },
+        {
+          "id": "D006",
+          "type": "滿額折扣",
+          "threshold": 2531,
+          "amount": 407,
+          "category": "3C",
+          "description": "3C類商品滿 $2531 折 $407"
+        },
+        {
+          "id": "D007",
+          "type": "滿額折扣",
+          "threshold": 3247,
+          "amount": 497,
+          "category": "家電",
+          "description": "家電類商品滿 $3247 折 $497"
+        },
+        {
+          "id": "D008",
+          "type": "滿額折扣",
+          "threshold": 3194,
+          "amount": 403,
+          "category": "家電",
+          "description": "家電類商品滿 $3194 折 $403"
+        },
+        {
+          "id": "D009",
+          "type": "滿額折扣",
+          "threshold": 3246,
+          "amount": 392,
+          "category": "家電",
+          "description": "家電類商品滿 $3246 折 $392"
+        },
+        {
+          "id": "D010",
+          "type": "滿額折扣",
+          "threshold": 2265,
+          "amount": 361,
+          "category": "其他",
+          "description": "其他類商品滿 $2265 折 $361"
+        },
+        {
+          "id": "D011",
+          "type": "滿額折扣",
+          "threshold": 1724,
+          "amount": 410,
+          "category": "其他",
+          "description": "其他類商品滿 $1724 折 $410"
+        },
+        {
+          "id": "D012",
+          "type": "滿額折扣",
+          "threshold": 2140,
+          "amount": 423,
+          "category": "其他",
+          "description": "其他類商品滿 $2140 折 $423"
+        },
+        {
+          "id": "D013",
+          "type": "滿件折扣",
+          "items": [
+            "C022",
+            "C005"
+          ],
+          "count": 3,
+          "amount": 338,
+          "description": "購買指定商品滿 3 件折 $338"
+        },
+        {
+          "id": "D014",
+          "type": "滿件折扣",
+          "items": [
+            "C004",
+            "C029",
+            "C009"
+          ],
+          "count": 3,
+          "amount": 224,
+          "description": "購買指定商品滿 3 件折 $224"
+        },
+        {
+          "id": "D015",
+          "type": "滿件折扣",
+          "items": [
+            "C003",
+            "C001",
+            "C015",
+            "C014",
+            "C019"
+          ],
+          "count": 3,
+          "amount": 336,
+          "description": "購買指定商品滿 3 件折 $336"
+        },
+        {
+          "id": "D016",
+          "type": "滿件折扣",
+          "items": [
+            "E051",
+            "E054",
+            "E037",
+            "E044",
+            "E052"
+          ],
+          "count": 3,
+          "amount": 331,
+          "description": "購買指定商品滿 3 件折 $331"
+        },
+        {
+          "id": "D017",
+          "type": "滿件折扣",
+          "items": [
+            "E036",
+            "E035",
+            "E037",
+            "E053",
+            "E052"
+          ],
+          "count": 3,
+          "amount": 308,
+          "description": "購買指定商品滿 3 件折 $308"
+        },
+        {
+          "id": "D018",
+          "type": "滿件折扣",
+          "items": [
+            "E037",
+            "E052",
+            "E034"
+          ],
+          "count": 4,
+          "amount": 315,
+          "description": "購買指定商品滿 4 件折 $315"
+        },
+        {
+          "id": "D019",
+          "type": "滿件折扣",
+          "items": [
+            "H061",
+            "H077",
+            "H063"
+          ],
+          "count": 2,
+          "amount": 162,
+          "description": "購買指定商品滿 2 件折 $162"
+        },
+        {
+          "id": "D020",
+          "type": "滿件折扣",
+          "items": [
+            "H063",
+            "H066",
+            "H079"
+          ],
+          "count": 3,
+          "amount": 326,
+          "description": "購買指定商品滿 3 件折 $326"
+        },
+        {
+          "id": "D021",
+          "type": "滿件折扣",
+          "items": [
+            "H069",
+            "H075",
+            "H063",
+            "H067"
+          ],
+          "count": 3,
+          "amount": 200,
+          "description": "購買指定商品滿 3 件折 $200"
+        },
+        {
+          "id": "D022",
+          "type": "滿件折扣",
+          "items": [
+            "O087",
+            "O096"
+          ],
+          "count": 3,
+          "amount": 352,
+          "description": "購買指定商品滿 3 件折 $352"
+        },
+        {
+          "id": "D023",
+          "type": "滿件折扣",
+          "items": [
+            "O091",
+            "O090",
+            "O082",
+            "O099",
+            "O089"
+          ],
+          "count": 2,
+          "amount": 157,
+          "description": "購買指定商品滿 2 件折 $157"
+        },
+        {
+          "id": "D024",
+          "type": "滿件折扣",
+          "items": [
+            "O083",
+            "O085"
+          ],
+          "count": 4,
+          "amount": 331,
+          "description": "購買指定商品滿 4 件折 $331"
+        },
+        {
+          "id": "D025",
+          "type": "組合折扣",
+          "items": [
+            "H071",
+            "E048",
+            "E049"
+          ],
+          "amount": 413,
+          "description": "指定組合商品搭配折 $413"
+        },
+        {
+          "id": "D026",
+          "type": "組合折扣",
+          "items": [
+            "C029",
+            "E044",
+            "C010"
+          ],
+          "amount": 378,
+          "description": "指定組合商品搭配折 $378"
+        },
+        {
+          "id": "D027",
+          "type": "組合折扣",
+          "items": [
+            "C020",
+            "H074",
+            "E057"
+          ],
+          "amount": 633,
+          "description": "指定組合商品搭配折 $633"
+        },
+        {
+          "id": "D028",
+          "type": "組合折扣",
+          "items": [
+            "H072",
+            "C023",
+            "E040"
+          ],
+          "amount": 671,
+          "description": "指定組合商品搭配折 $671"
+        },
+        {
+          "id": "D029",
+          "type": "組合折扣",
+          "items": [
+            "C024",
+            "C006",
+            "H062"
+          ],
+          "amount": 635,
+          "description": "指定組合商品搭配折 $635"
+        }
+      ],
+      "result": {
+        "original_total": 4550,
+        "total_discount": 1075,
+        "final_price": 3475,
+        "used_discounts": [
+          {
+            "id": "D001",
+            "type": "滿額折扣",
+            "threshold": 3302,
+            "amount": 483,
+            "category": "衣服",
+            "description": "衣服類商品滿 $3302 折 $483"
+          },
+          {
+            "id": "D002",
+            "type": "滿額折扣",
+            "threshold": 3658,
+            "amount": 375,
+            "category": "衣服",
+            "description": "衣服類商品滿 $3658 折 $375"
+          },
+          {
+            "id": "D003",
+            "type": "滿額折扣",
+            "threshold": 2832,
+            "amount": 217,
+            "category": "衣服",
+            "description": "衣服類商品滿 $2832 折 $217"
+          }
+        ]
+      }
+    }
+  ]
+}

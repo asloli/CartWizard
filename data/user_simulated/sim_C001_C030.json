@@ -1,0 +1,17 @@
+{
+  "cart_id": "sim_C001_C030",
+  "base_items": [
+    {
+      "id": "C001",
+      "price": 2514,
+      "category": "衣服"
+    },
+    {
+      "id": "C030",
+      "price": 1739,
+      "category": "衣服"
+    }
+  ],
+  "recommended": null,
+  "accepted": false
+}

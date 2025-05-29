@@ -6,3 +6,5 @@ jupyter
 lightgbm
 tqdm
 streamlit
+fastapi
+uvicorn

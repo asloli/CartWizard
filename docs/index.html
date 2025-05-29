@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>📑 CartWizard 拆帳明細</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 選項卡式導航 -->
+  <nav class="tab-nav">
+    <ul>
+      <li><a href="index.html">📑 拆帳明細</a></li>
+      <li><a href="02_addon.html">🛍️ 加購推薦</a></li>
+      <li><a href="03_simulation.html">🧪 模擬加購</a></li>
+    </ul>
+  </nav>
+
+  <h1>📑 拆帳明細</h1>
+  <p>請上傳購物車 JSON 檔案，查看折扣拆帳與發票結果</p>
+
+  <input type="file" id="cartFile" accept=".json">
+  <div id="result"></div>
+
+  <!-- 業務邏輯腳本 -->
+  <script src="cart_summary.js"></script>
+  <!-- 讓當前分頁的標籤自動加上 active -->
+  <script src="tab-nav.js"></script>
+
+  <!-- 版本標記 -->
+  <div class="version-tag">v0.3-alpha</div>
+</body>
+</html>
